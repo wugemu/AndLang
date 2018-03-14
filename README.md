@@ -35,4 +35,47 @@ ext{
 
 7.创建的Activity 继承 BaseLangActivity<对应Presenter类名>；
 
+# 类说明：
+# BaseLangViewModel
+方法名				说明
+
+setValue(key,value)		设置字段值同时设置view的值(TextView.text,EditText.text,ImageView.src)
+
+getValueFromKey(key)		通过字段key获取值
+
+bindView(key)			设置view的值(TextView.text,EditText.text,ImageView.src)
+
+getValueFromView(key)		获取View的值(TextView.text,EditText.text)同时设置字段值
+
+registView(key,view)		注册view绑定model
+
+registView(activity)		注册Activity的view到model
+
+registView(fragment)		注册Fragment的view到model
+
+setListValue(key,value,adapter)	设置List 类型字段值同时设置listview的数据源
+
+bindListView(key,adapter)	设置listview的数据源
+
+isSupportView(fieldclass)	判断某个字段是否属于支持的View类型
+
+notifyView			刷新所有属于支持的View类型的数据(不包含listview)
+
+updateModel(model)		子类中必须实现此方法，设置刷新默认model中的字段值
+
+# BaseLangPresenter
+方法名						说明
+
+BaseLangPresenter(activity,modelclass)		构造函数，创建BaseLangViewModel子类对象，绑定activity中的View到model
+
+BaseLangPresenter(fragment,activity,modelclass)	构造函数，创建BaseLangViewModel子类对象，绑定fragment中的View到model
+
+registView(key,view)				单个注册View到Model
+
+addListenerView(view)				添加View点击事件
+
+addItemListenerView(view)			添加View Item点击事件
+
+initModel()					BaseLangPresenter的子类必须实现此方法，进行数据初始化，网络请求等操作
+
 # 后续。。。
