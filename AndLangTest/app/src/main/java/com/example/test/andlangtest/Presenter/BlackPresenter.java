@@ -26,16 +26,6 @@ public class BlackPresenter extends BaseLangPresenter<BlackViewModel>{
     }
 
     @Override
-    public void onClick(View v) {
-
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
-    @Override
     public void success(BlackViewModel busModel, String tag) {
 
     }

@@ -2,14 +2,12 @@ package com.example.test.andlang.andlangutil;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 /**
  * Created by root on 18-3-8.
  */
 
-public abstract class BaseLangPresenter<T> implements View.OnClickListener,AdapterView.OnItemClickListener,LangHttpInterface<T>{
+public abstract class BaseLangPresenter<T> implements LangHttpInterface<T>{
     public static String TAG="andlang";
     public BaseLangActivity activity;
     public BaseLangViewModel model;
@@ -37,13 +35,6 @@ public abstract class BaseLangPresenter<T> implements View.OnClickListener,Adapt
             model.registView(key,view);
         }
     }
-    //添加监听View
-    public void addListenerView(View view){
-        view.setOnClickListener(this);
-    }
-    //添加监听View
-    public void addItemListenerView(ListView view){
-        view.setOnItemClickListener(this);
-    }
+
     public abstract void initModel();
 }

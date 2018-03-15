@@ -2,6 +2,8 @@ package com.example.test.andlangtest.Activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -56,8 +58,19 @@ public class MainActivity extends BaseLangActivity<MainPresenter> implements Bla
 
     @Override
     public void bindListener() {
-        presenter.addListenerView(btn_next);
-        presenter.addItemListenerView(lv_hellow);
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_hello2.setText("点击按钮");
+                presenter.addListValue(et_hello.getText().toString());
+            }
+        });
+        lv_hellow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                et_hello.setText(presenter.getListValue().get(position));
+            }
+        });
     }
 
     @Override

@@ -1,9 +1,6 @@
 package com.example.test.andlangtest.Presenter;
 
 
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.example.test.andlang.andlangutil.BaseLangActivity;
@@ -58,27 +55,14 @@ public class MainPresenter extends BaseLangPresenter<MainViewModel> {
         LangHttp.postHttp(activity,"http://192.168.1.1/sysAction!queryVerNew.action",param,MainViewModel.class,this,"test");
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_next:
-                model.setValue("tv_hello","点击按钮");
-                Log.d("0.0",(String) model.getValueFromView("et_hello"));
-                if(datalist!=null&&adapter!=null){
-                    datalist.add(model.getValueFromView("et_hello"));
-                    adapter.notifyDataSetChanged();
-                }
-                break;
+    public void addListValue(String value){
+        if(datalist!=null&&adapter!=null){
+            datalist.add(value);
+            adapter.notifyDataSetChanged();
         }
     }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (parent.getId()){
-            case R.id.lv_hellow:
-                model.setValue("et_hello",datalist.get(position));
-                break;
-        }
+    public List<String> getListValue(){
+        return datalist;
     }
 
     @Override
