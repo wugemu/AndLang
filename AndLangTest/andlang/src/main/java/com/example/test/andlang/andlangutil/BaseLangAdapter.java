@@ -17,10 +17,11 @@ public abstract class BaseLangAdapter<T> extends BaseAdapter{
     public Activity context;
     private int layoutId;
     private List<T> data;
-    public BaseLangAdapter(Activity context, int layoutId){
+    public BaseLangAdapter(Activity context, int layoutId,List<T> data){
         inflater=LayoutInflater.from(context);
         this.context=context;
         this.layoutId=layoutId;
+        setData(data);
     }
     public void setData(List<T> data){
         this.data=data;

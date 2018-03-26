@@ -22,7 +22,6 @@ import java.util.Map;
 
 public class MainPresenter extends BaseLangPresenter<MainViewModel> {
     private List<String> datalist;
-    private BaseLangAdapter adapter;
     public MainPresenter(BaseLangActivity activity, Class<MainViewModel> modelClass){
         super(activity,modelClass);
     }
@@ -38,14 +37,8 @@ public class MainPresenter extends BaseLangPresenter<MainViewModel> {
             datalist.add("122");
             datalist.add("123");
             datalist.add("1214");
-            adapter=new BaseLangAdapter<String>(activity, R.layout.listview_main_item) {
-                @Override
-                public void convert(BaseLangViewHolder helper, int postion, String item) {
-                    TextView tv_item_hello=(TextView) helper.getView(R.id.tv_item_hello);
-                    tv_item_hello.setText(item);
-                }
-            };
-            model.setListValue("lv_hellow",datalist,adapter);
+            model.setValue("lv_hellow",datalist);
+            model.notifyData(1);
         }
 
         //网络请求
@@ -56,9 +49,9 @@ public class MainPresenter extends BaseLangPresenter<MainViewModel> {
     }
 
     public void addListValue(String value){
-        if(datalist!=null&&adapter!=null){
+        if(datalist!=null){
             datalist.add(value);
-            adapter.notifyDataSetChanged();
+            model.notifyData(2);
         }
     }
     public List<String> getListValue(){
@@ -67,9 +60,7 @@ public class MainPresenter extends BaseLangPresenter<MainViewModel> {
 
     @Override
     public void success(MainViewModel busModel, String tag) {
-
-        model.updateModel(busModel);
-        model.notifyView();
+        model.notifyData(1);
     }
 
     @Override

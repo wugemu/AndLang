@@ -9,9 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.test.andlang.andlangutil.BaseLangFragment;
+import com.example.test.andlang.andlangutil.ImageUtils;
 import com.example.test.andlangtest.Presenter.BlackPresenter;
 import com.example.test.andlangtest.ViewModel.BlackViewModel;
 import com.example.test.andlangtest.R;
+
+import java.util.Observable;
 
 import butterknife.BindView;
 
@@ -113,5 +116,12 @@ public class BlankFragment extends BaseLangFragment<BlackPresenter> {
     public interface BlackFragemtInterface {
         // TODO: Update argument type and name
         public void setData(String value);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if((int)arg==1){
+            ImageUtils.doLoadImageUrl(iv_fragment,(String)presenter.model.getValueFromKey("iv_fragment"));
+        }
     }
 }

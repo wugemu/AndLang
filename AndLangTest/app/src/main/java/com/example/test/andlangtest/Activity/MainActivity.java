@@ -10,9 +10,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.test.andlang.andlangutil.BaseLangActivity;
+import com.example.test.andlang.andlangutil.BaseLangAdapter;
+import com.example.test.andlang.andlangutil.BaseLangViewHolder;
 import com.example.test.andlangtest.Presenter.MainPresenter;
 import com.example.test.andlangtest.ViewModel.MainViewModel;
 import com.example.test.andlangtest.R;
+
+import java.util.List;
+import java.util.Observable;
 
 import butterknife.BindView;
 
@@ -29,6 +34,7 @@ public class MainActivity extends BaseLangActivity<MainPresenter> implements Bla
     @BindView(R.id.lv_hellow)
     ListView lv_hellow;
 
+    private BaseLangAdapter adapter;
     private BlankFragment blankFragment;
     public FragmentManager fManager;
 
@@ -78,4 +84,21 @@ public class MainActivity extends BaseLangActivity<MainPresenter> implements Bla
 
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        if((int)arg==1){
+            adapter=new BaseLangAdapter<String>(this, R.layout.listview_main_item, (List<String>)presenter.model.getValueFromKey("lv_hellow")) {
+                @Override
+                public void convert(BaseLangViewHolder helper, int postion, String item) {
+                    TextView tv_item_hello=(TextView) helper.getView(R.id.tv_item_hello);
+                    tv_item_hello.setText(item);
+                }
+            };
+            lv_hellow.setAdapter(adapter);
+        }else if((int)arg==2){
+            if(adapter!=null){
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
 }

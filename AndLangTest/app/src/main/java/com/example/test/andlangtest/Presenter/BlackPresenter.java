@@ -22,6 +22,7 @@ public class BlackPresenter extends BaseLangPresenter<BlackViewModel>{
     public void initModel() {
         if(model!=null) {
             model.setValue("iv_fragment", "http://img.zcool.cn/community/01b0d857b1a34d0000012e7e87f5eb.gif");
+            model.notifyData(1);
         }
     }
 

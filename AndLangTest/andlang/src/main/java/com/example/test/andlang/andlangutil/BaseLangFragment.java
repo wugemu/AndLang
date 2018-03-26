@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import com.example.test.andlang.R;
 
+import java.util.Observer;
+
 import butterknife.ButterKnife;
 
 /**
@@ -20,7 +22,7 @@ import butterknife.ButterKnife;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Fragment {
+public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Fragment implements Observer{
 
     public BaseLangActivity activity;
     public T presenter;
@@ -44,6 +46,11 @@ public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Frag
         View rootview= inflater.inflate(getLayoutId(), container, false);
         ButterKnife.bind(this, rootview);
         bindView();
+        if(presenter!=null&&presenter.model!=null){
+            presenter.model.addObserver(this);
+        }else {
+            Log.e(BaseLangPresenter.TAG,"presenter 未初始化");
+        }
         bindListener();
         initData();
         return rootview;
@@ -66,7 +73,9 @@ public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Frag
     @Override
     public void onDetach() {
         super.onDetach();
-
+        if(presenter!=null&&presenter.model!=null){
+            presenter.model.deleteObserver(this);
+        }
     }
 
     public abstract int getLayoutId();

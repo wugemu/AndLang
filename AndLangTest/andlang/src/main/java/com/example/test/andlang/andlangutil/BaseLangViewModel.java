@@ -12,12 +12,13 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
 /**
  * Created by root on 18-3-7.
  */
 
-public abstract class BaseLangViewModel<T extends BaseLangViewModel> {
+public abstract class BaseLangViewModel<T extends BaseLangViewModel> extends Observable{
     private Map<String,View> bindmap=new HashMap<String,View>();
     private Object obj;
 
@@ -240,5 +241,8 @@ public abstract class BaseLangViewModel<T extends BaseLangViewModel> {
         }
     }
 
-    abstract public void updateModel(T model);
+    public void notifyData(Object tag){
+        setChanged();    //改变通知者的状态
+        notifyObservers(tag);
+    }
 }
