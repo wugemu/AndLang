@@ -11,9 +11,7 @@
 # 已整合开发包
 butterknife (注入包)，glide(图片加载库，支持gif图)，okhttp(目前流行的网络请求库)，gson(gson数据处理库,使用新版本2.8.2)
 # 已整合的方法
-Adapter和ViewHolder优化，PreferencesUtil(本地化存储工具)，
-
-ActivityUtil（Activity管理工具），ButtonUtil（防button连点工具）,DateUtil（日期工具），FileUtil（针对android7.0以上文件访问位置工具），IDCardUtil（身份证号校验工具），ImageUtil（图片工具），RegexUtil（输入校验工具），StatusBarUtils（状态栏自定义工具），ToastUtil（Toast显示工具）
+Adapter和ViewHolder优化，PreferencesUtil(本地化存储工具)，ActivityUtil（Activity管理工具），ButtonUtil（防button连点工具）,DateUtil（日期工具），FileUtil（针对android7.0以上文件访问位置工具），IDCardUtil（身份证号校验工具），ImageUtil（图片工具），RegexUtil（输入校验工具），StatusBarUtils（状态栏自定义工具），ToastUtil（Toast显示工具）
 # 模块及任务
 一个Activity或Fragment，一个Presenter， 一个ViewModel。
 
