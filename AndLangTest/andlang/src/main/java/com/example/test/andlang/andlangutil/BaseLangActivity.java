@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.example.test.andlang.util.ActivityUtil;
+
 import java.util.Observer;
 
 import butterknife.ButterKnife;
@@ -18,7 +20,7 @@ public abstract class BaseLangActivity<T extends BaseLangPresenter> extends AppC
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLayoutId();
+        setContentView(getLayoutId());
         ButterKnife.bind(this);
         bindView();
         if(presenter!=null&&presenter.model!=null){
@@ -37,6 +39,8 @@ public abstract class BaseLangActivity<T extends BaseLangPresenter> extends AppC
             presenter.initModel();
         }
     }
+
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -63,8 +67,9 @@ public abstract class BaseLangActivity<T extends BaseLangPresenter> extends AppC
         if(presenter!=null&&presenter.model!=null){
             presenter.model.deleteObserver(this);
         }
+        ActivityUtil.getInstance().popOneActivity(this);
     }
-    public abstract void setLayoutId();//设置布局id
+    public abstract int getLayoutId();//设置布局id
     public abstract void bindView();
     public abstract void bindListener();
 }

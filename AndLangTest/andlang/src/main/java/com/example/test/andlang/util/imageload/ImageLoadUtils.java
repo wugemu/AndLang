@@ -1,15 +1,14 @@
-package com.example.test.andlang.andlangutil;
+package com.example.test.andlang.util.imageload;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.ImageView;
 
 /**
  * Created by root on 18-3-9.
  */
 
-public final class ImageUtils {
+public final class ImageLoadUtils {
     private static IInnerImageSetter sImageSetter;
     public static void setImageSetter(@NonNull IInnerImageSetter imageSetter) {
         sImageSetter = imageSetter;
@@ -23,9 +22,10 @@ public final class ImageUtils {
      */
     public static <IMAGE extends ImageView> void doLoadImageUrl(@NonNull IMAGE view, @Nullable String url) {
        if(sImageSetter==null){
-           Log.e(BaseLangPresenter.TAG,"sImageSetter is not null");
+
            return;
        }
         sImageSetter.doLoadImageUrl(view, url);
     }
+
 }

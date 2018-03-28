@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.example.test.andlang.andlangutil.BaseLangActivity;
 import com.example.test.andlang.andlangutil.BaseLangAdapter;
 import com.example.test.andlang.andlangutil.BaseLangViewHolder;
+import com.example.test.andlang.util.StatusBarUtils;
+import com.example.test.andlang.util.ToastUtil;
 import com.example.test.andlangtest.Presenter.MainPresenter;
 import com.example.test.andlangtest.ViewModel.MainViewModel;
 import com.example.test.andlangtest.R;
@@ -44,8 +46,8 @@ public class MainActivity extends BaseLangActivity<MainPresenter> implements Bla
     }
 
     @Override
-    public void setLayoutId() {
-        setContentView(R.layout.activity_main);
+    public int getLayoutId() {
+        return R.layout.activity_main;
     }
 
     @Override
@@ -86,8 +88,11 @@ public class MainActivity extends BaseLangActivity<MainPresenter> implements Bla
 
     @Override
     public void update(Observable o, Object arg) {
+        MainViewModel model=(MainViewModel)presenter.model;
         if((int)arg==1){
-            adapter=new BaseLangAdapter<String>(this, R.layout.listview_main_item, (List<String>)presenter.model.getValueFromKey("lv_hellow")) {
+            ywtDiscount.setText(model.getMessage());
+            tv_hello2.setText(model.getTv_hello2());
+            adapter=new BaseLangAdapter<String>(this, R.layout.listview_main_item, model.getLv_hellow()) {
                 @Override
                 public void convert(BaseLangViewHolder helper, int postion, String item) {
                     TextView tv_item_hello=(TextView) helper.getView(R.id.tv_item_hello);
@@ -99,6 +104,7 @@ public class MainActivity extends BaseLangActivity<MainPresenter> implements Bla
             if(adapter!=null){
                 adapter.notifyDataSetChanged();
             }
+            ToastUtil.show(MainActivity.this,"asdfsfs");
         }
     }
 }

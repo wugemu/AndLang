@@ -8,7 +8,9 @@ import com.example.test.andlang.http.HttpU;
 import com.example.test.andlang.util.BaseLangUtil;
 import com.example.test.andlang.util.VersionUtil;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +22,7 @@ import okhttp3.Request;
 
 public class LangHttp {
     public static Gson gson=new Gson();
-    public static void postHttp(Context context, final String url, Map<String, Object> params, final Class modelclass, final LangHttpInterface listener,final String tag){
+    public static void postHttp(Context context, final String url, Map<String, Object> params, final Type type, final LangHttpInterface listener){
         if (params == null) {
             params = new HashMap<String, Object>();
         }
@@ -41,13 +43,19 @@ public class LangHttp {
             public void onResponse(String response) {
                 try {
                     if(BaseLangUtil.isEmpty(response)){
-                        listener.empty(tag);
-                    } else if(listener!=null){
-                        listener.success(gson.fromJson(response,modelclass),tag);
+                        if(listener!=null) {
+                            listener.empty();
+                        }
+                    } else{
+                        if(listener!=null) {
+                            listener.success( gson.fromJson(response, type));
+                         }
                     }
                 }catch (Exception e){
                     Log.e(BaseLangPresenter.TAG,e.getMessage());
-                    listener.error(tag);
+                    if(listener!=null) {
+                        listener.error();
+                    }
                 }
             }
 
@@ -55,7 +63,7 @@ public class LangHttp {
             public void onError(Request request, Exception e, Context context) {
                 super.onError(request, e, context);
                 if(listener!=null){
-                    listener.error(tag);
+                    listener.error();
                 }
             }
         });

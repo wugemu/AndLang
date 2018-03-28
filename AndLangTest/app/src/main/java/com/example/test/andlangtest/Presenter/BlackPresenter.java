@@ -9,35 +9,23 @@ import com.example.test.andlang.andlangutil.BaseLangPresenter;
 import com.example.test.andlang.andlangutil.BaseLangViewModel;
 import com.example.test.andlangtest.ViewModel.BlackViewModel;
 
+import java.util.Map;
+
 /**
  * Created by root on 18-3-8.
  */
 
-public class BlackPresenter extends BaseLangPresenter<BlackViewModel>{
-    public BlackPresenter(BaseLangFragment fragment,BaseLangActivity activity,  Class<? extends BaseLangViewModel> modelClass) {
-        super(fragment,activity,modelClass);
+public class BlackPresenter extends BaseLangPresenter {
+    public BlackPresenter(BaseLangFragment fragment, BaseLangActivity activity, Class<? extends BaseLangViewModel> modelClass) {
+        super(fragment, activity, modelClass);
     }
 
     @Override
     public void initModel() {
-        if(model!=null) {
-            model.setValue("iv_fragment", "http://img.zcool.cn/community/01b0d857b1a34d0000012e7e87f5eb.gif");
+        if (model != null) {
+            model=(BlackViewModel)model;
+            ((BlackViewModel) model).setIv_fragment("http://img.zcool.cn/community/01b0d857b1a34d0000012e7e87f5eb.gif");
             model.notifyData(1);
         }
-    }
-
-    @Override
-    public void success(BlackViewModel busModel, String tag) {
-
-    }
-
-    @Override
-    public void empty(String tag) {
-
-    }
-
-    @Override
-    public void error(String tag) {
-
     }
 }

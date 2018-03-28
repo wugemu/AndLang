@@ -9,7 +9,7 @@
 # 已整合开发包
 butterknife (注入包)，glide(图片加载库，支持gif图)，okhttp(目前流行的网络请求库)，gson(gson数据处理库,使用新版本2.8.2)
 # 已整合的方法
-Adapter和ViewHolder优化。
+Adapter和ViewHolder优化，PreferencesUtil工具(本地化存储)，ActivityUtil工具（Activity管理）
 # 模块及任务
 一个Activity或Fragment，一个Presenter， 一个ViewModel。
 

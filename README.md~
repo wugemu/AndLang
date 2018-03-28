@@ -12,8 +12,11 @@ butterknife (注入包)，glide(图片加载库，支持gif图)，okhttp(目前�
 Adapter和ViewHolder优化。
 # 模块及任务
 一个Activity或Fragment，一个Presenter， 一个ViewModel。
+
 Activity 和 Fragment 负责设置布局，View注入，事件处理，初始化Presenter，特殊View处理。
+
 Presenter 负责创建ViewModel实例，控制ViewModel字段间接控制View，网络数据请求，网络请求结果处理。
+
 ViewModel 负责将Activity或Fragment中的View字段绑定到ViewModel字段，被赋值时可同时刷新View。
 # 使用方法
 1.通过添加lib工程方式引入到项目中；

@@ -1,11 +1,13 @@
 package com.example.test.andlang.andlangutil;
 
+import java.util.Map;
+
 /**
  * Created by root on 18-3-13.
  */
 
 public interface LangHttpInterface<T> {
-    void success(T busModel,String tag);
-    void empty(String tag);
-    void error(String tag);
+    void success(T map);
+    void empty();
+    void error();
 }

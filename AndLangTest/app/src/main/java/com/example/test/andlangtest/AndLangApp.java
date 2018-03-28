@@ -7,34 +7,16 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.test.andlang.andlangutil.IInnerImageSetter;
-import com.example.test.andlang.andlangutil.ImageUtils;
+import com.example.test.andlang.andlangutil.BaseLangApplication;
 
 /**
  * Created by root on 18-3-9.
  */
 
-public class AndLangApp extends Application {
+public class AndLangApp extends BaseLangApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        ImageUtils.setImageSetter(new IInnerImageSetter() {
-            @Override
-            public <IMAGE extends ImageView> void doLoadImageUrl(@NonNull IMAGE view, @Nullable String url) {
-                if (url.toLowerCase().contains(".gif")) {
-                    Glide.with(getApplicationContext())
-                            .load(url)
-                            .asGif()
-                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                            .into(view);
-                }else {
-                    Glide.with(getApplicationContext())
-                            .load(url)
-                            .placeholder(com.example.test.andlang.R.mipmap.ic_launcher)
-                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                            .into(view);
-                }
-            }
-        });
+
     }
 }

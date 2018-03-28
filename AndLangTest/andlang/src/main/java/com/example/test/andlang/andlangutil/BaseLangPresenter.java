@@ -7,7 +7,7 @@ import android.view.View;
  * Created by root on 18-3-8.
  */
 
-public abstract class BaseLangPresenter<T> implements LangHttpInterface<T>{
+public abstract class BaseLangPresenter {
     public static String TAG="andlang";
     public BaseLangActivity activity;
     public BaseLangViewModel model;

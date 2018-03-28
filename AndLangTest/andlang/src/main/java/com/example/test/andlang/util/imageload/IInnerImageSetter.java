@@ -1,4 +1,4 @@
-package com.example.test.andlang.andlangutil;
+package com.example.test.andlang.util.imageload;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
