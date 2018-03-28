@@ -3,9 +3,11 @@
 # 目的
 开发过程中，经常View与Data混杂在一起，项目复杂化，代码量增加时，逻辑难以阅读，影响迭代开发；AndLang目的是将View与Data进行绑定，当开发者操作Data时，框架能够同时刷新该Data绑定的View，这样开发者能够将更多的精力用在业务逻辑处理，提高开发效率，代码逻辑清晰。同时整合常用开发包到AndLang框架中，方便Android开发者快速搭建项目框架。
 # 原理
-运用类的反射将注册的Activity中的所有定义View(目前 TextView EditText ListView ImageView)参数字段添加到Map<KEY，VIEW>中，KEY是字段名称，VIEW是该字段指向view；当设置Data中KEY的值时，同时取出KEY所对应的VIEW进行赋值。
+方式1.运用类的反射将注册的Activity中的所有定义View(目前 TextView EditText ListView ImageView)参数字段添加到Map<KEY，VIEW>中，KEY是字段名称，VIEW是该字段指向view；当设置Data中KEY的值时，同时取出KEY所对应的VIEW进行赋值。
+
+方式2（推荐).运用java中的kvo模式(observer和observable),对model数据变化进行监控，控制view显示。
 # 弊端
-对于Activity 和 Fragment 的View字段命名 和 ViewModel中字段命名 需要保持一致；
+方式1.对于Activity 和 Fragment 的View字段命名 和 ViewModel中字段命名 需要保持一致，以及未知问题；
 # 已整合开发包
 butterknife (注入包)，glide(图片加载库，支持gif图)，okhttp(目前流行的网络请求库)，gson(gson数据处理库,使用新版本2.8.2)
 # 已整合的方法
