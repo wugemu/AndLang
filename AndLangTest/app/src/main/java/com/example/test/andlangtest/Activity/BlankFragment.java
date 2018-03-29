@@ -79,12 +79,22 @@ public class BlankFragment extends BaseLangFragment<BlackPresenter> {
     }
 
     @Override
-    public void bindView() {
+    public void initPresenter() {
         presenter=new BlackPresenter(this,activity,BlackViewModel.class);
     }
 
     @Override
+    public void initView() {
+
+    }
+
+    @Override
     public void bindListener() {
+
+    }
+
+    @Override
+    public void initData() {
 
     }
 

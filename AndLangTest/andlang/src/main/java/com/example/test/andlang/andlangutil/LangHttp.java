@@ -22,7 +22,7 @@ import okhttp3.Request;
 
 public class LangHttp {
     public static Gson gson=new Gson();
-    public static void postHttp(Context context, final String url, Map<String, Object> params, final Type type, final LangHttpInterface listener){
+    public static void postHttp(final BaseLangActivity context, final String url, Map<String, Object> params, final Type type, final LangHttpInterface listener){
         if (params == null) {
             params = new HashMap<String, Object>();
         }
@@ -32,11 +32,13 @@ public class LangHttp {
             @Override
             public void onBefore(Request request) {
                 super.onBefore(request);
+                context.showWaitDialog();
             }
 
             @Override
             public void onAfter() {
                 super.onAfter();
+                context.dismissWaitDialog();
             }
 
             @Override

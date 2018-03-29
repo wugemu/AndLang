@@ -45,18 +45,20 @@ public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Frag
         // Inflate the layout for this fragment
         View rootview= inflater.inflate(getLayoutId(), container, false);
         ButterKnife.bind(this, rootview);
-        bindView();
+        initView();
+        initPresenter();
         if(presenter!=null&&presenter.model!=null){
             presenter.model.addObserver(this);
         }else {
             Log.e(BaseLangPresenter.TAG,"presenter 未初始化");
         }
-        bindListener();
         initData();
+        initModel();
+        bindListener();
         return rootview;
     }
 
-    public void initData(){
+    private void initModel(){
         if(presenter==null){
             Log.e(BaseLangPresenter.TAG,"presenter 未创建 ");
         }else {
@@ -79,6 +81,8 @@ public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Frag
     }
 
     public abstract int getLayoutId();
-    public abstract void bindView();
+    public abstract void initView();
+    public abstract void initPresenter();
+    public abstract void initData();
     public abstract void bindListener();
 }
