@@ -39,6 +39,21 @@ ext{
 
 7.创建的Activity 继承 BaseLangActivity<对应Presenter类名>；
 
+# 已整合的View：
+一.自定义标题栏: 
+
+1.AndroidManifest.xml中application标签样式设置成android:theme="@style/AppTheme.LangNoActionBar"
+
+2.布局文件线性布局include lang_common_top.xml	<include layout="@layout/lang_common_top"/>
+
+3.activity的initView方法中使用initTitleBar(false,"标题");标题栏颜色和状态栏颜色自行修改
+
+二.自定义网络加载等待动画:
+
+1.布局文件相对布局include lang_common_loading.xml	<include layout="@layout/lang_common_loading"/>
+
+2.activity的initView方法中使用initLoading(); 动画可自行修改
+
 # 类说明：
 # BaseLangViewModel
 方法名				说明
