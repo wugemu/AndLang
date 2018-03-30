@@ -46,7 +46,7 @@ public class MainPresenter extends BaseLangPresenter {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("type", "2");
         param.put("needAdver", "1");
-        LangHttp.postHttp(activity, "https://bbc.weinihaigou.com//version/getVersionSix.shtml", param, new TypeToken<Map<String, Object>>() {}.getType(), new LangHttpInterface<Map<String, Object>>() {
+        LangHttp.postHttp(activity, "https://192.168.1.1/version/getVersionSix.shtml", param, new TypeToken<Map<String, Object>>() {}.getType(), new LangHttpInterface<Map<String, Object>>() {
             @Override
             public void success(Map<String, Object> map) {
                 model.notifyData(1);
