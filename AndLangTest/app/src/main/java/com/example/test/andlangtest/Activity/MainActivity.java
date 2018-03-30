@@ -68,6 +68,19 @@ public class MainActivity extends BaseLangActivity<MainPresenter> implements Bla
             fManager.beginTransaction().add(R.id.fl_layout, blankFragment, "BlankFragment")
                     .commitAllowingStateLoss();
         }
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_hello2.setText("点击按钮");
+                presenter.addListValue(tv_hello3.getText().toString());
+            }
+        });
+        lv_hellow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                tv_hello3.setText(presenter.getListValue().get(position));
+            }
+        });
     }
 
     @Override
@@ -83,23 +96,6 @@ public class MainActivity extends BaseLangActivity<MainPresenter> implements Bla
             ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS,
                     200);
         }
-    }
-
-    @Override
-    public void bindListener() {
-        btn_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv_hello2.setText("点击按钮");
-                presenter.addListValue(tv_hello3.getText().toString());
-            }
-        });
-        lv_hellow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                tv_hello3.setText(presenter.getListValue().get(position));
-            }
-        });
     }
 
     @Override

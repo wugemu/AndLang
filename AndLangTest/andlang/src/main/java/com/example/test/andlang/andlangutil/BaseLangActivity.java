@@ -40,14 +40,9 @@ public abstract class BaseLangActivity<T extends BaseLangPresenter> extends AppC
         ButterKnife.bind(this);
         initView();
         initPresenter();
-        if(presenter!=null&&presenter.model!=null){
-            presenter.model.addObserver(this);
-        }else {
-            Log.e(BaseLangPresenter.TAG,"presenter 未初始化");
-        }
+        setObserModelForTag();
         initData();
         initModel();
-        bindListener();
     }
 
     private void initModel(){
@@ -57,7 +52,13 @@ public abstract class BaseLangActivity<T extends BaseLangPresenter> extends AppC
             presenter.initModel();
         }
     }
-
+    private void setObserModelForTag(){
+        if(presenter!=null&&presenter.model!=null){
+            presenter.model.addObserver(this);
+        }else {
+            Log.e(BaseLangPresenter.TAG,"presenter 未初始化");
+        }
+    }
     public void initTitleBar(boolean isCanBack,String title){
         StatusBarUtils.setWindowStatusBarColor(this, R.color.colorAccent);
         StatusBarUtils.setTextColorStatusBar(this,false);
@@ -172,5 +173,4 @@ public abstract class BaseLangActivity<T extends BaseLangPresenter> extends AppC
     public abstract void initView();
     public abstract void initPresenter();
     public abstract void initData();
-    public abstract void bindListener();
 }

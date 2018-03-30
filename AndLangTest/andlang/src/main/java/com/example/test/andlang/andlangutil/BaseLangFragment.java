@@ -47,14 +47,9 @@ public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Frag
         ButterKnife.bind(this, rootview);
         initView();
         initPresenter();
-        if(presenter!=null&&presenter.model!=null){
-            presenter.model.addObserver(this);
-        }else {
-            Log.e(BaseLangPresenter.TAG,"presenter 未初始化");
-        }
+        setObserModelForTag();
         initData();
         initModel();
-        bindListener();
         return rootview;
     }
 
@@ -66,6 +61,13 @@ public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Frag
         }
     }
 
+    private void setObserModelForTag(){
+        if(presenter!=null&&presenter.model!=null){
+            presenter.model.addObserver(this);
+        }else {
+            Log.e(BaseLangPresenter.TAG,"presenter 未初始化");
+        }
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -84,5 +86,4 @@ public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Frag
     public abstract void initView();
     public abstract void initPresenter();
     public abstract void initData();
-    public abstract void bindListener();
 }
