@@ -20,7 +20,7 @@ import java.util.Observable;
  * Created by root on 18-3-7.
  */
 
-public abstract class BaseLangViewModel extends Observable{
+public  class BaseLangViewModel extends Observable{
 
 
     public void notifyData(Object tag){

@@ -37,7 +37,15 @@ ext{
 
 6.创建Presenter类继承BaseLangPresenter；
 
-7.创建的Activity 继承 BaseLangActivity<对应Presenter类名>；
+7.创建的Activity 继承 BaseLangActivity<对应Presenter类名>；使用WebView组件，需要继承BaseLangWebActivity;
+
+说明Activity中方法执行顺序：
+
+initView();
+
+initPresenter();
+
+initData();
 
 # 已整合的View：
 一.自定义标题栏: 
@@ -53,6 +61,12 @@ ext{
 1.布局文件相对布局include lang_common_loading.xml	<include layout="@layout/lang_common_loading"/>
 
 2.activity的initView方法中使用initLoading(); 动画可自行修改
+
+三.webview加载整合：
+
+1.无需创建布局文件，直接继承BaseLangWebActivity；
+
+BaseLangWebActivity中自行修改webview配置
 
 # 类说明：
 # BaseLangViewModel

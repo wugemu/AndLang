@@ -1,6 +1,7 @@
 package com.example.test.andlangtest.Activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -73,6 +74,9 @@ public class MainActivity extends BaseLangActivity<MainPresenter> implements Bla
             public void onClick(View v) {
                 tv_hello2.setText("点击按钮");
                 presenter.addListValue(tv_hello3.getText().toString());
+                Intent intent=new Intent(MainActivity.this,WebActivity.class);
+                intent.putExtra("url","http://www.weinihaigou.com/m-html/index/index.html?title=妮素供应链");
+                startActivity(intent);
             }
         });
         lv_hellow.setOnItemClickListener(new AdapterView.OnItemClickListener() {

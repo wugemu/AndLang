@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/lang_common_top"
+        android:id="@+id/baselang_top"/>
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/baselang_webview"
+        android:layout_below="@+id/baselang_top"
+        />
+    <include
+        android:layout_below="@+id/baselang_top"
+        layout="@layout/lang_common_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+</RelativeLayout>
