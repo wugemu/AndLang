@@ -3,6 +3,7 @@ package com.example.test.andlang.widget.webview;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -31,6 +32,7 @@ public abstract class BaseLangWebActivity extends BaseLangActivity<BaseLangPrese
     @BindView(R2.id.baselang_webview)
     WebView baselang_webview;
 
+    private Class childClass;
     @Override
     public int getLayoutId() {
         return R.layout.activity_baselang_web;
@@ -40,6 +42,7 @@ public abstract class BaseLangWebActivity extends BaseLangActivity<BaseLangPrese
     public void initView() {
         initLoading();
         initWebview();
+        childClass=getClass();
     }
 
     public void loadUrl(String url){
@@ -91,11 +94,9 @@ public abstract class BaseLangWebActivity extends BaseLangActivity<BaseLangPrese
                     startActivity(intent);
                     return true;
                 }
-                if(presenter!=null&&presenter.activity!=null) {
-                    Intent intent = new Intent(BaseLangWebActivity.this, presenter.activity.getClass());
-                    intent.putExtra("url", url);
-                    ActivityUtil.getInstance().start(BaseLangWebActivity.this, intent);
-                }
+                Intent intent = new Intent(BaseLangWebActivity.this, childClass);
+                intent.putExtra("url", url);
+                ActivityUtil.getInstance().start(BaseLangWebActivity.this, intent);
                 return true;
             }
 
