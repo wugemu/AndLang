@@ -109,7 +109,7 @@ public Activity getLastActivity() {
                 R.anim.out_to_left);
     }
 
-    public static void start2(Activity activity, Intent i) {
+    public  void start2(Activity activity, Intent i) {
         activity.startActivity(i);
         activity.overridePendingTransition(R.anim.alpha_in,
                 R.anim.alpha_out);

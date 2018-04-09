@@ -3,8 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-
+    <color name="colorLangTitle">#FFCB32</color>
     <color name="lang_colorHint">#B3B3B3</color>
     <color name="lang_colorWhite">#FFFFFF</color>
+    <color name="lang_colorBlack">#333333</color>
     <color name="lang_greyline">#f2f2f2</color>
+    <color name="lang_colororg">#F05B1A</color>
+    <color name="lang_colortransparent">#00000000</color>
 </resources>

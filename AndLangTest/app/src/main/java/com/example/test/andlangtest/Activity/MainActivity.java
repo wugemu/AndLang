@@ -16,8 +16,11 @@ import android.widget.TextView;
 import com.example.test.andlang.andlangutil.BaseLangActivity;
 import com.example.test.andlang.andlangutil.BaseLangAdapter;
 import com.example.test.andlang.andlangutil.BaseLangViewHolder;
+import com.example.test.andlang.util.ActivityUtil;
 import com.example.test.andlang.util.PermissionsCheckerUtil;
 import com.example.test.andlang.util.ToastUtil;
+import com.example.test.andlang.widget.dialogview.BaseLangDialog;
+import com.example.test.andlang.widget.dialogview.BaseLangDialogInterface;
 import com.example.test.andlangtest.Presenter.MainPresenter;
 import com.example.test.andlangtest.ViewModel.MainViewModel;
 import com.example.test.andlangtest.R;
@@ -76,13 +79,19 @@ public class MainActivity extends BaseLangActivity<MainPresenter> implements Bla
                 presenter.addListValue(tv_hello3.getText().toString());
                 Intent intent=new Intent(MainActivity.this,WebActivity.class);
                 intent.putExtra("url","http://www.weinihaigou.com/m-html/index/index.html?title=妮素供应链");
-                startActivity(intent);
+                ActivityUtil.getInstance().start(MainActivity.this,intent);
             }
         });
         lv_hellow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 tv_hello3.setText(presenter.getListValue().get(position));
+            }
+        });
+        BaseLangDialog dialog=new BaseLangDialog(MainActivity.this, "测试", new BaseLangDialogInterface() {
+            @Override
+            public void executeOk() {
+                ToastUtil.show(MainActivity.this,"测试");
             }
         });
     }

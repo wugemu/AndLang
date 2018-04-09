@@ -60,7 +60,7 @@ public abstract class BaseLangActivity<T extends BaseLangPresenter> extends AppC
         }
     }
     public void initTitleBar(boolean isCanBack,String title){
-        StatusBarUtils.setWindowStatusBarColor(this, R.color.colorAccent);
+        StatusBarUtils.setWindowStatusBarColor(this, R.color.colorLangTitle);
         StatusBarUtils.setTextColorStatusBar(this,false);
         LinearLayout llBack = ButterKnife.findById(this,R.id.lang_ll_back);
         TextView tvTitle = ButterKnife.findById(this,R.id.lang_tv_title);
@@ -68,6 +68,66 @@ public abstract class BaseLangActivity<T extends BaseLangPresenter> extends AppC
         TextView tvEdit = ButterKnife.findById(this,R.id.lang_tv_right);
         if(tvTitle!=null&& !BaseLangUtil.isEmpty(title)){
             tvTitle.setText(title);
+        }
+        if(llBack!=null){
+            if(!isCanBack){
+                llBack.setVisibility(View.GONE);
+            }else {
+                llBack.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        goBack();
+                    }
+                });
+            }
+        }
+    }
+    public void initTitleBar(boolean isCanBack, String title, int imageId, View.OnClickListener listener){
+        StatusBarUtils.setWindowStatusBarColor(this, R.color.colorLangTitle);
+        StatusBarUtils.setTextColorStatusBar(this,false);
+        LinearLayout llBack = ButterKnife.findById(this,R.id.lang_ll_back);
+        TextView tvTitle = ButterKnife.findById(this,R.id.lang_tv_title);
+        ImageView ivEdit = ButterKnife.findById(this,R.id.lang_iv_right);
+        TextView tvEdit = ButterKnife.findById(this,R.id.lang_tv_right);
+        if(tvTitle!=null&& !BaseLangUtil.isEmpty(title)){
+            tvTitle.setText(title);
+        }
+        if(ivEdit!=null){
+            ivEdit.setVisibility(View.VISIBLE);
+            ivEdit.setImageResource(imageId);
+            if(listener!=null){
+                ivEdit.setOnClickListener(listener);
+            }
+        }
+        if(llBack!=null){
+            if(!isCanBack){
+                llBack.setVisibility(View.GONE);
+            }else {
+                llBack.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        goBack();
+                    }
+                });
+            }
+        }
+    }
+    public void initTitleBar(boolean isCanBack, String title, String rightTitle, View.OnClickListener listener){
+        StatusBarUtils.setWindowStatusBarColor(this, R.color.colorLangTitle);
+        StatusBarUtils.setTextColorStatusBar(this,false);
+        LinearLayout llBack = ButterKnife.findById(this,R.id.lang_ll_back);
+        TextView tvTitle = ButterKnife.findById(this,R.id.lang_tv_title);
+        ImageView ivEdit = ButterKnife.findById(this,R.id.lang_iv_right);
+        TextView tvEdit = ButterKnife.findById(this,R.id.lang_tv_right);
+        if(tvTitle!=null&& !BaseLangUtil.isEmpty(title)){
+            tvTitle.setText(title);
+        }
+        if(tvEdit!=null&& !BaseLangUtil.isEmpty(rightTitle)){
+            tvEdit.setVisibility(View.VISIBLE);
+            tvEdit.setText(rightTitle);
+            if(listener!=null){
+                tvEdit.setOnClickListener(listener);
+            }
         }
         if(llBack!=null){
             if(!isCanBack){
