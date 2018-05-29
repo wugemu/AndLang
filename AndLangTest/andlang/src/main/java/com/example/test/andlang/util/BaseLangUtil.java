@@ -1,6 +1,8 @@
 package com.example.test.andlang.util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
@@ -43,5 +45,11 @@ public class BaseLangUtil {
             return url.substring(start + key.length() + 1, end);
         }
         return "";
+    }
+    //Screen Width
+    public static int getDisplayWidth(Activity activity) {
+        DisplayMetrics dm = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        return dm.widthPixels;
     }
 }

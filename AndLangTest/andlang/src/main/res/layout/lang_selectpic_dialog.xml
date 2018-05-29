@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:orientation="vertical" >
+        <Button
+            android:id="@+id/dialog_xiangce_btn"
+            android:layout_height="46dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/button_bg3"
+            android:text="相册"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimary" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/lang_greyline"/>
+        <Button
+            android:id="@+id/dialog_paizhao_btn"
+            android:layout_height="46dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/button_bg2"
+            android:text="拍照"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="10dp"/>
+        <Button
+            android:id="@+id/selectpic_cancel_btn"
+            android:layout_height="46dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/button_bg1"
+            android:text="取消"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimaryDark" />
+
+    </LinearLayout>
+</RelativeLayout>

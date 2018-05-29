@@ -21,6 +21,8 @@ import com.example.test.andlang.util.PermissionsCheckerUtil;
 import com.example.test.andlang.util.ToastUtil;
 import com.example.test.andlang.widget.dialogview.BaseLangDialog;
 import com.example.test.andlang.widget.dialogview.BaseLangDialogInterface;
+import com.example.test.andlang.widget.dialogview.BaseLangSelectPicDialog;
+import com.example.test.andlang.widget.dialogview.BaseLangSelectPicInterface;
 import com.example.test.andlangtest.Presenter.MainPresenter;
 import com.example.test.andlangtest.ViewModel.MainViewModel;
 import com.example.test.andlangtest.R;
@@ -88,10 +90,21 @@ public class MainActivity extends BaseLangActivity<MainPresenter> implements Bla
                 tv_hello3.setText(presenter.getListValue().get(position));
             }
         });
-        BaseLangDialog dialog=new BaseLangDialog(MainActivity.this, "测试", new BaseLangDialogInterface() {
+//        BaseLangDialog dialog=new BaseLangDialog(MainActivity.this, "测试", new BaseLangDialogInterface() {
+//            @Override
+//            public void executeOk() {
+//                ToastUtil.show(MainActivity.this,"测试");
+//            }
+//        });
+        BaseLangSelectPicDialog selectPicDialog=new BaseLangSelectPicDialog(MainActivity.this, new BaseLangSelectPicInterface() {
             @Override
-            public void executeOk() {
-                ToastUtil.show(MainActivity.this,"测试");
+            public void executeBtn1() {
+
+            }
+
+            @Override
+            public void executeBtn2() {
+
             }
         });
     }
