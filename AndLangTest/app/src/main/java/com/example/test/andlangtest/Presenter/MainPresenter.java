@@ -61,6 +61,11 @@ public class MainPresenter extends BaseLangPresenter {
             public void error() {
 
             }
+
+            @Override
+            public void fail() {
+
+            }
         });
     }
 

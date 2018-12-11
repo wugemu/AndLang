@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+   android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:gravity="center"
+    android:id="@+id/lang_bottom"
+    android:visibility="visible"
+    android:background="@color/lang_colorBackGroud"
+    >
+    <View
+        android:layout_width="80dp"
+        android:layout_height="0.5dp"
+        android:background="#ADADAD"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我是有底线哒～"
+        android:textSize="13sp"
+        android:textColor="#ADADAD"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"/>
+    <View
+        android:layout_width="80dp"
+        android:layout_height="0.5dp"
+        android:background="#ADADAD"/>
+</LinearLayout>

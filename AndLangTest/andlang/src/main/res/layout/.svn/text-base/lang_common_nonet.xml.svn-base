@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lang_colorBackGroud"
+    android:visibility="gone"
+    android:id="@+id/rl_nonet">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/iv_net_data"
+            android:scaleType="fitCenter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:gravity="center"
+            android:id="@+id/tv_net_data"
+            android:textSize="13sp"
+            android:textColor="#898989"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"/>
+        <TextView
+            android:id="@+id/tv_net_reload"
+            android:layout_marginTop="16dp"
+            android:layout_width="100dp"
+            android:layout_height="34dp"
+            android:text="重新加载"
+            android:textColor="#595959"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:background="@drawable/bg_rect_reload"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/lang_colortransparent"/>
+    </LinearLayout>
+
+</RelativeLayout>
