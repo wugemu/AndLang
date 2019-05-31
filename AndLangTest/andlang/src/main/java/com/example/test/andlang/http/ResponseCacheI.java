@@ -8,12 +8,9 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
+//暂时不用
+@Deprecated
 public class ResponseCacheI implements Interceptor {
-    private Context context;
-
-    public ResponseCacheI(Context context) {
-        this.context = context;
-    }
 
     @Override
     public Response intercept(Chain chain) throws IOException {

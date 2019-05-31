@@ -2,22 +2,37 @@ package com.example.test.andlang.andlangutil;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.test.andlang.BuildConfig;
 import com.example.test.andlang.R;
+import com.example.test.andlang.cockroach.CrashLog;
+import com.example.test.andlang.cockroach.DebugSafeModeTipActivity;
 import com.example.test.andlang.log.AppCrashHandler;
 import com.example.test.andlang.util.BaseLangUtil;
 import com.example.test.andlang.util.LogUtil;
 import com.example.test.andlang.util.PreferencesUtil;
+import com.example.test.andlang.util.ToastUtil;
+import com.example.test.andlang.util.VersionUtil;
 import com.example.test.andlang.util.imageload.*;
 import com.example.test.andlang.util.imageload.IInnerImageSetter;
+import com.example.test.andlang.widget.dialogview.BaseLangDialog;
+import com.example.test.andlang.widget.dialogview.BaseLangDialogInterface;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -30,6 +45,9 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
+import com.wanjian.cockroach.Cockroach;
+import com.wanjian.cockroach.ExceptionHandler;
 //import com.squareup.leakcanary.LeakCanary;
 //import com.squareup.leakcanary.RefWatcher;
 
@@ -83,6 +101,65 @@ public class BaseLangApplication extends Application {
         crashHandler.init(getApplicationContext());
         Logger.addLogAdapter(new AndroidLogAdapter());
         initImageLoad();
+
+        LogUtil.e("0.0","版本号：V"+VersionUtil.getVersionName(BaseLangApplication.this));
+        installCockroach();//最大化防止应用crash  需要在清单中注册DebugSafeModeTipActivity
+    }
+
+    private void installCockroach() {
+        final Thread.UncaughtExceptionHandler sysExcepHandler = Thread.getDefaultUncaughtExceptionHandler();
+        Cockroach.install(this, new ExceptionHandler() {
+            @Override
+            protected void onUncaughtExceptionHappened(Thread thread, Throwable throwable) {
+                LogUtil.e("--->onUncaughtExceptionHappened:" + thread + "<---");
+                if (BaseLangUtil.isApkInDebug()) {
+                    //crash日志记录
+                    CrashLog.saveCrashLog(getApplicationContext(), throwable);
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtil.show(BaseLangApplication.this,"捕获到导致崩溃的异常");
+                        }
+                    });
+                }else {
+                    //上传友盟日志
+                    if(throwable!=null) {
+                        String errorInfo=CrashLog.getCrashLog(getApplicationContext(), throwable);
+                        if(!BaseLangUtil.isEmpty(errorInfo)) {
+                            MobclickAgent.reportError(BaseLangApplication.this,errorInfo);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            protected void onBandageExceptionHappened(Throwable throwable) {
+                throwable.printStackTrace();//打印警告级别log，该throwable可能是最开始的bug导致的，无需关心
+                LogUtil.e("Cockroach Worked");
+            }
+
+            @Override
+            protected void onEnterSafeMode() {
+                LogUtil.e("已经进入安全模式");
+                if (BaseLangUtil.isApkInDebug()) {
+                    Intent intent = new Intent(BaseLangApplication.this, DebugSafeModeTipActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }else {
+                    MobclickAgent.onEvent(BaseLangApplication.this,"app_salf","进入APP安全模式V"+ VersionUtil.getVersionName(BaseLangApplication.this));
+                }
+            }
+
+            @Override
+            protected void onMayBeBlackScreen(Throwable e) {
+                Thread thread = Looper.getMainLooper().getThread();
+                LogUtil.e("--->onUncaughtExceptionHappened:" + thread + "<---");
+                //黑屏时建议直接杀死app
+                sysExcepHandler.uncaughtException(thread, new RuntimeException("black screen"));
+            }
+
+        });
+
     }
 
     private void initImageLoad() {
@@ -115,19 +192,56 @@ public class BaseLangApplication extends Application {
         ImageLoadUtils.setImageSetter(new IInnerImageSetter() {
             @Override
             public <IMAGE extends ImageView> void doLoadImageUrl(@NonNull IMAGE view, @Nullable String url) {
-                if (!BaseLangUtil.isEmpty(url) && url.toLowerCase().contains(".gif")) {
-                    GlideUtil.getInstance().displayGif(getApplicationContext(), url, view);
-                } else {
-                    GlideUtil.getInstance().display(getApplicationContext(), url, view);
+                if (!BaseLangUtil.isEmpty(url)) {
+                    if (url.toLowerCase().contains(".gif")) {
+                        GlideUtil.getInstance().displayGif(getApplicationContext(), url, view);
+                    } else {
+                        GlideUtil.getInstance().display(getApplicationContext(), url, view);
+                    }
+                }
+            }
+
+            @Override
+            public <IMAGE extends ImageView> void doLoadImageUrlCenterCrop(@NonNull IMAGE view, @Nullable String url) {
+                if (!BaseLangUtil.isEmpty(url)) {
+                    if (url.toLowerCase().contains(".gif")) {
+                        GlideUtil.getInstance().displayGifCenterCrop(getApplicationContext(), url, view);
+                    } else {
+                        GlideUtil.getInstance().displayCenterCrop(getApplicationContext(), url, view);
+                    }
+                }
+            }
+
+            @Override
+            public <IMAGE extends ImageView> void doLoadImageUrlFitCenter(@NonNull IMAGE view, @Nullable String url) {
+                if (!BaseLangUtil.isEmpty(url)) {
+                    if (url.toLowerCase().contains(".gif")) {
+                        GlideUtil.getInstance().displayGifFitCenter(getApplicationContext(), url, view);
+                    } else {
+                        GlideUtil.getInstance().displayFitCenter(getApplicationContext(), url, view);
+                    }
                 }
             }
 
             @Override
             public <IMAGE extends ImageView> void doLoadCircleImageUrl(@NonNull IMAGE view, @Nullable String url) {
-                if (!BaseLangUtil.isEmpty(url) && url.toLowerCase().contains(".gif")) {
-                    GlideUtil.getInstance().displayGif(getApplicationContext(), url, view);
-                } else {
-                    GlideUtil.getInstance().displayHead(getApplicationContext(), url, view);
+                if (!BaseLangUtil.isEmpty(url)) {
+                    if (url.toLowerCase().contains(".gif")) {
+                        GlideUtil.getInstance().displayGif(getApplicationContext(), url, view);
+                    } else {
+                        GlideUtil.getInstance().displayHead(getApplicationContext(), url, view);
+                    }
+                }
+            }
+
+            @Override
+            public <IMAGE extends ImageView> void doLoadImageRound(@NonNull IMAGE view, @Nullable String url, float round) {
+                if (!BaseLangUtil.isEmpty(url)) {
+                    if (url.toLowerCase().contains(".gif")) {
+                        GlideUtil.getInstance().displayGif(getApplicationContext(), url, view);
+                    } else {
+                        GlideUtil.getInstance().displayRoundImg(getApplicationContext(), url, view,round);
+                    }
                 }
             }
 
@@ -136,6 +250,13 @@ public class BaseLangApplication extends Application {
                 //测试比较加载速度使用
                 ImageLoader.getInstance().displayImage(url,view, BOUTIQUE_OPTIPON);
             }
+
+            @Override
+            public <IMAGE extends ImageView> void doLoadImageRes(@NonNull IMAGE view, @Nullable int resId) {
+                GlideUtil.getInstance().displayLocRes(getApplicationContext(), resId, view);
+            }
+
+
         });
     }
 
@@ -162,15 +283,26 @@ public class BaseLangApplication extends Application {
             try {
                 TelephonyManager mTelephonyMgr=(TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
                 imei=mTelephonyMgr.getDeviceId();
-                if(BaseLangUtil.isEmpty(imei)){
-                    imei= Settings.Secure.getString(
-                            this.getContentResolver(), Settings.Secure.ANDROID_ID);
-                }
                 BaseLangApplication.getInstance().getSpUtil().putString(this,"imei",imei);
             } catch (SecurityException e) {
-                e.printStackTrace();
+                imei= Settings.Secure.getString(
+                        this.getContentResolver(), Settings.Secure.ANDROID_ID);
+                BaseLangApplication.getInstance().getSpUtil().putString(this,"imei",imei);
             }
         }
         return imei;
+    }
+
+    public boolean checkApkExist(String packageName){
+        if (TextUtils.isEmpty(packageName))
+            return false;
+        try {
+            ApplicationInfo info = getPackageManager()
+                    .getApplicationInfo(packageName,
+                            PackageManager.GET_UNINSTALLED_PACKAGES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 }

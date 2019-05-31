@@ -12,7 +12,7 @@ public class LogUtil {
 
     private static final int level = 0;     // 当前的输出级别，只要大于该级别才输出,1-v,2-d,3-i,4-w,5-e，所以0是输出所有
 
-    public static final boolean isLog = true;  // 是否输出日志
+    public static final boolean isLog = BaseLangUtil.isApkInDebug();  // 是否输出日志
     public static final boolean isCash= false; //是否内存检测应用安装
     public static void v(String tag,String msg) {
         if(isLog && 1>level) {

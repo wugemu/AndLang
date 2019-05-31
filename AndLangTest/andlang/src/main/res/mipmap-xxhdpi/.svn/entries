@@ -1,14 +1,14 @@
 10
 
 dir
-35550
+36919
 svn://langlinsen@192.168.11.245/branches/BBC/SuDian_And/Develop/andlang/src/main/res/mipmap-xxhdpi
 svn://langlinsen@192.168.11.245
 
 
 
-2018-11-15T03:55:09.030254Z
-35482
+2019-01-24T05:58:20.311154Z
+35850
 langlinsen
 
 
@@ -365,6 +365,74 @@ has-props
 
 
 2920
+
+pulldown.png
+file
+
+
+
+
+2019-01-08T06:52:28.000000Z
+b895c0c7556fe7e6fa717d4c8e734eca
+2019-01-08T13:03:45.784318Z
+35753
+langlinsen
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+652
+
+bg_pop.png
+file
+
+
+
+
+2019-01-24T05:16:24.000000Z
+6b6139220060982b9214c1b83a805f63
+2019-01-24T05:58:20.311154Z
+35850
+langlinsen
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1922
 
 lang_error.png
 file

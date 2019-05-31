@@ -40,7 +40,7 @@ public class MainPresenter extends BaseLangPresenter {
             datalist.add("123");
             datalist.add("1214");
             ((MainViewModel) model).setLv_hellow(datalist);
-            model.notifyData(1);
+            notifyView("1");
         }
         //网络请求
         Map<String, Object> param = new HashMap<String, Object>();
@@ -49,7 +49,7 @@ public class MainPresenter extends BaseLangPresenter {
         LangHttp.postHttp(activity, "https://192.168.1.1/version/getVersionSix.shtml", param, new TypeToken<Map<String, Object>>(){}.getType(), new LangHttpInterface<Map<String, Object>>() {
             @Override
             public void success(Map<String, Object> map) {
-                model.notifyData(1);
+                notifyView("1");
             }
 
             @Override
@@ -72,7 +72,7 @@ public class MainPresenter extends BaseLangPresenter {
     public void addListValue(String value){
         if(datalist!=null){
             datalist.add(value);
-            model.notifyData(2);
+            notifyView("2");
         }
     }
     public List<String> getListValue(){

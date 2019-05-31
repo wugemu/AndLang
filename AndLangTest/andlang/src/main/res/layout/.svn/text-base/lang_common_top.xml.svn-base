@@ -38,7 +38,7 @@
 
         <LinearLayout
             android:id="@+id/lang_ll_back"
-            android:layout_width="45dp"
+            android:layout_width="30dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
             android:orientation="horizontal">
@@ -51,6 +51,17 @@
                 android:src="@mipmap/back2" />
         </LinearLayout>
 
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/lang_tv_close"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:textSize="17sp"
+            android:text="关闭"
+            android:gravity="center_vertical"
+            android:textColor="@color/lang_colorBlack"
+            android:layout_toRightOf="@+id/lang_ll_back"/>
+        
         <ImageView
             android:id="@+id/lang_iv_right"
             android:layout_width="wrap_content"

@@ -1,14 +1,14 @@
 10
 
 dir
-35550
+36919
 svn://langlinsen@192.168.11.245/branches/BBC/SuDian_And/Develop/andlang/src/main/java/com/example/test/andlang/log
 svn://langlinsen@192.168.11.245
 
 
 
-2018-11-15T03:55:09.030254Z
-35482
+2019-05-09T13:02:24.960978Z
+36742
 langlinsen
 
 
@@ -32,10 +32,10 @@ file
 
 
 
-2018-11-15T03:58:25.000000Z
-a24a8788f87fc77295519b9a9c38c6cb
-2018-11-15T03:55:09.030254Z
-35482
+2019-05-09T12:59:55.000000Z
+3794592072aab743fbc18fc40128993a
+2019-05-09T13:02:24.960978Z
+36742
 langlinsen
 
 
@@ -58,7 +58,7 @@ langlinsen
 
 
 
-7118
+9926
 
 AppLog.java
 file
@@ -66,10 +66,10 @@ file
 
 
 
-2018-11-15T03:58:25.000000Z
-6c9fda2507664fae127a9e6438b86b7f
-2018-11-15T03:55:09.030254Z
-35482
+2019-01-17T01:45:37.000000Z
+2f548385fc9cb67cc3bfa77e478bc2d3
+2019-01-17T01:56:59.618326Z
+35830
 langlinsen
 
 
@@ -92,5 +92,5 @@ langlinsen
 
 
 
-6374
+6438
 

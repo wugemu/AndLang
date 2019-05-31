@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/AndLangTest.iml" filepath="$PROJECT_DIR$/AndLangTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/andlang/andlang.iml" filepath="$PROJECT_DIR$/andlang/andlang.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cockroach/cockroach.iml" filepath="$PROJECT_DIR$/cockroach/cockroach.iml" />
     </modules>
   </component>
 </project>

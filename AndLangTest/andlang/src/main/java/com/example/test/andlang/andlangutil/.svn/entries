@@ -1,14 +1,14 @@
 10
 
 dir
-35550
+36919
 svn://langlinsen@192.168.11.245/branches/BBC/SuDian_And/Develop/andlang/src/main/java/com/example/test/andlang/andlangutil
 svn://langlinsen@192.168.11.245
 
 
 
-2018-11-19T08:49:43.713034Z
-35512
+2019-05-28T03:16:33.686587Z
+36888
 langlinsen
 
 
@@ -28,14 +28,14 @@ fa693710-7701-a84d-9436-1f24b81d51d3
 
 BaseLangApplication.java
 file
-35631
 
 
 
-2018-12-11T07:30:46.000000Z
-a112afdf647ccb8dda252707a7855a55
-2018-12-11T09:08:23.196902Z
-35631
+
+2019-05-28T03:09:24.000000Z
+2c5660e3d1b1bbad5df8e797d1e53aad
+2019-05-28T03:16:33.686587Z
+36888
 langlinsen
 has-props
 
@@ -58,18 +58,18 @@ has-props
 
 
 
-7878
+13917
 
 BaseLangFragment.java
 file
-35561
 
 
 
-2018-11-30T09:47:35.000000Z
-815fe36d91c0bd8699a2fe92e591aba2
-2018-11-30T09:50:57.543992Z
-35561
+
+2019-01-16T02:07:44.000000Z
+2f2c88eef7634d4b8bf8bda343160ef7
+2019-01-16T03:49:55.906232Z
+35821
 langlinsen
 has-props
 
@@ -92,11 +92,11 @@ has-props
 
 
 
-3763
+4240
 
 LangHttp.java
 file
-35631
+
 
 
 
@@ -266,14 +266,14 @@ has-props
 
 BaseLangActivity.java
 file
-35561
 
 
 
-2018-11-30T09:48:20.000000Z
-692b20705bd08976aebb20a5411f96d4
-2018-11-30T09:50:57.543992Z
-35561
+
+2019-05-17T09:25:56.000000Z
+19ab331d3b5bd0563a536b748eb3908e
+2019-05-17T10:33:54.727330Z
+36826
 langlinsen
 has-props
 
@@ -296,7 +296,7 @@ has-props
 
 
 
-13869
+16800
 
 LangImageUpInterface.java
 file

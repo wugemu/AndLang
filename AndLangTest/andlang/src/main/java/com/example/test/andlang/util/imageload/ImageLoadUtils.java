@@ -34,6 +34,34 @@ public final class ImageLoadUtils {
      * @param url image url
      * @param <IMAGE> ImageView class type
      */
+    public static <IMAGE extends ImageView> void doLoadImageUrlCenterCrop(@NonNull IMAGE view, @Nullable String url) {
+        if(sImageSetter==null){
+
+            return;
+        }
+        sImageSetter.doLoadImageUrlCenterCrop(view, url);
+    }
+
+    /**
+     * load image using {@link IInnerImageSetter}
+     * @param view the imageView instance
+     * @param url image url
+     * @param <IMAGE> ImageView class type
+     */
+    public static <IMAGE extends ImageView> void doLoadImageUrlFitCenter(@NonNull IMAGE view, @Nullable String url) {
+        if(sImageSetter==null){
+
+            return;
+        }
+        sImageSetter.doLoadImageUrlFitCenter(view, url);
+    }
+
+    /**
+     * load image using {@link IInnerImageSetter}
+     * @param view the imageView instance
+     * @param url image url
+     * @param <IMAGE> ImageView class type
+     */
     public static <IMAGE extends ImageView> void doLoadCircleImageUrl(@NonNull IMAGE view, @Nullable String url) {
         if(sImageSetter==null){
 
@@ -54,6 +82,28 @@ public final class ImageLoadUtils {
             return;
         }
         sImageSetter.doLoadByImageLoader(view, url);
+    }
+
+    /**
+     * load image using {@link IInnerImageSetter}
+     * @param view the imageView instance
+     * @param resId image resId
+     * @param <IMAGE> ImageView class type
+     */
+    public static <IMAGE extends ImageView> void doLoadImageRes(@NonNull IMAGE view, @Nullable int resId) {
+        if(sImageSetter==null){
+
+            return;
+        }
+        sImageSetter.doLoadImageRes(view, resId);
+    }
+
+    public static <IMAGE extends ImageView> void doLoadImageRound(@NonNull IMAGE view, @Nullable String url,float round) {
+        if(sImageSetter==null){
+
+            return;
+        }
+        sImageSetter.doLoadImageRound(view, url,round);
     }
 
 }

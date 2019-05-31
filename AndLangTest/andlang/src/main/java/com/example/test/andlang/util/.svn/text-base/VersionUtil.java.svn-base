@@ -21,7 +21,7 @@ public class VersionUtil {
         try {
             PackageManager packageManager = context.getPackageManager();
             packInfo = packageManager.getPackageInfo(context.getPackageName(),
-                    0);
+                    PackageManager.GET_SIGNATURES);//获取的数据量相对较小
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -39,7 +39,7 @@ public class VersionUtil {
         try {
             PackageManager packageManager = context.getPackageManager();
             packInfo = packageManager.getPackageInfo(context.getPackageName(),
-                    0);
+                    PackageManager.GET_SIGNATURES);//获取的数据量相对较小
 
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

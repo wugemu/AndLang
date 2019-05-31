@@ -7,4 +7,5 @@
     <string name="tip_no_network">网络不稳定，请检查后再试</string>
     <string name="tip_log_exit">很抱歉,程序出现异常,即将退出.</string>
     <string name="tip_error">小素开小差啦\n拜托等一下下，稍后再回来看看！</string>
+    <string name="title_activity_lang_test">LangTestActivity</string>
 </resources>

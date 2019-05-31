@@ -1,14 +1,14 @@
 10
 
 dir
-35550
+36919
 svn://langlinsen@192.168.11.245/branches/BBC/SuDian_And/Develop/andlang/src/main/java/com/example/test/andlang
 svn://langlinsen@192.168.11.245
 
 
 
-2018-11-28T09:59:17.130162Z
-35545
+2019-05-28T03:19:58.624512Z
+36889
 langlinsen
 
 
@@ -29,6 +29,9 @@ fa693710-7701-a84d-9436-1f24b81d51d3
 http
 dir
 
+test
+dir
+
 log
 dir
 
@@ -36,6 +39,9 @@ andlangutil
 dir
 
 widget
+dir
+
+cockroach
 dir
 
 util

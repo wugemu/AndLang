@@ -1,14 +1,14 @@
 10
 
 dir
-35550
+36919
 svn://langlinsen@192.168.11.245/branches/BBC/SuDian_And/Develop/andlang
 svn://langlinsen@192.168.11.245
 
 
 
-2018-11-28T09:59:17.130162Z
-35545
+2019-05-28T11:29:37.608725Z
+36897
 langlinsen
 
 
@@ -136,14 +136,14 @@ has-props
 
 build.gradle
 file
-35563
 
 
 
-2018-11-28T10:08:13.000000Z
-b9904d826e2e1f952863282c1cc9dfc1
-2018-11-30T09:53:01.937961Z
-35563
+
+2019-05-17T08:30:01.000000Z
+2ba6d64b0227e1848cacb120e266afea
+2019-05-28T11:29:37.608725Z
+36897
 langlinsen
 has-props
 
@@ -166,5 +166,5 @@ has-props
 
 
 
-1968
+2137
 

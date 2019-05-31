@@ -3,6 +3,7 @@ package com.example.test.andlang.log;
 import android.util.Log;
 
 import com.example.test.andlang.andlangutil.BaseLangApplication;
+import com.example.test.andlang.util.LogUtil;
 import com.orhanobut.logger.Logger;
 
 import java.io.BufferedWriter;
@@ -14,8 +15,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class AppLog {
-	private static Boolean MYLOG_SWITCH = true; // 日志文件总开关
-	private static Boolean MYLOG_WRITE_TO_FILE = true;// 日志写入文件开关
+	private static Boolean MYLOG_SWITCH = LogUtil.isLog; // 日志文件总开关
+	private static Boolean MYLOG_WRITE_TO_FILE = LogUtil.isLog;// 日志写入文件开关
 	private static char MYLOG_TYPE = 'v';// 输入日志类型，w代表只输出告警信息等，v代表输出所有信息
 	private static String MYLOG_PATH_SDCARD_DIR = BaseLangApplication.logDir;// 日志文件在sdcard中的路径
 	private static int SDCARD_LOG_FILE_SAVE_DAYS = 0;// sd卡中日志文件的最多保存天数
@@ -144,7 +145,7 @@ public class AppLog {
 	 * 
 	 * @return
 	 * **/
-	private static void writeLogtoFile(String mylogtype, String tag, String text) {// 新建或打开日志文件
+	public static void writeLogtoFile(String mylogtype, String tag, String text) {// 新建或打开日志文件
 		Date nowtime = new Date();
 		String needWriteFiel = logfile.format(nowtime);
 		String needWriteMessage = myLogSdf.format(nowtime) + "    " + mylogtype

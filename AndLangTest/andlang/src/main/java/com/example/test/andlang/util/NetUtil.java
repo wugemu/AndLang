@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.telephony.TelephonyManager;
 
 import java.util.List;
@@ -24,15 +26,20 @@ public class NetUtil {
      * @return
      */
     public static boolean isConnected(Context context) {
-
         ConnectivityManager connectivity = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        if (null != connectivity) {
-
-            NetworkInfo info = connectivity.getActiveNetworkInfo();
-            if (null != info && info.isConnected()) {
-                return true;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            //Android 6.0以上方法
+            NetworkCapabilities networkCapabilities = connectivity.getNetworkCapabilities(connectivity.getActiveNetwork());
+            if(networkCapabilities!=null){
+                return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
+            }
+        }else {
+            if (null != connectivity) {
+                NetworkInfo info = connectivity.getActiveNetworkInfo();
+                if (null != info && info.isConnected()) {
+                    return true;
+                }
             }
         }
         return false;

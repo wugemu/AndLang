@@ -45,5 +45,9 @@ public abstract class HttpCallback {
 
     }
 
+    public void errorCode(int code){
+
+    }
+
     public abstract void onResponse(String response);
 }

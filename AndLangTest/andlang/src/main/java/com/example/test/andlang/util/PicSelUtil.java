@@ -64,6 +64,45 @@ public class PicSelUtil {
         return cacheFile;
     }
 
+    //清除缓存
+    public static void clearAllCacheDir(){
+        // 如果不存在目录，则创建
+        if (getImgFileDir().exists()) {
+            //删除文件夹
+            delFile(getImgFileDir());
+        }
+    }
+
+    //清除缓存
+    public static void clearCacheDir(){
+        // 如果不存在目录，则创建
+        if (!getImgFileDir().exists()) {
+            getImgFileDir().mkdir();
+        }
+        File cacheFile = new File(getImgFileDir(), "langcache");
+        //删除文件夹
+        delFile(cacheFile);
+    }
+    //删除文件
+    public static void delFile(File cacheFile){
+        // 如果存在则删除
+        if (cacheFile.isFile()) {
+            cacheFile.delete();
+            return;
+        }
+        if (cacheFile.isDirectory()) {
+            File[] childFile = cacheFile.listFiles();
+            if (childFile == null || childFile.length == 0) {
+                cacheFile.delete();
+                return;
+            }
+            for (File f : childFile) {
+                delFile(f);
+            }
+            cacheFile.delete();
+        }
+    }
+
     public static Uri getImageCacheUri(Context context,String fileName) {
         // 如果不存在目录，则创建
         if (!getImgFileDir().exists()) {
@@ -104,5 +143,14 @@ public class PicSelUtil {
         return outputImage;
     }
 
+    public static File getFile(String fileName) {
+        // 如果不存在目录，则创建
+        if (!getImgFileDir().exists()) {
+            getImgFileDir().mkdir();
+        }
+        // 创建File对象，用于存储牌照后的图片
+        File outputImage = new File(getImgFileDir(), fileName);
+        return outputImage;
+    }
 
 }

@@ -79,32 +79,20 @@ public class MainActivity extends BaseLangActivity<MainPresenter> implements Bla
             public void onClick(View v) {
                 tv_hello2.setText("点击按钮");
                 presenter.addListValue(tv_hello3.getText().toString());
-                Intent intent=new Intent(MainActivity.this,WebActivity.class);
-                intent.putExtra("url","http://www.weinihaigou.com/m-html/index/index.html?title=妮素供应链");
-                ActivityUtil.getInstance().start(MainActivity.this,intent);
+
+                BaseLangDialog dialog=new BaseLangDialog(MainActivity.this, "测试", new BaseLangDialogInterface() {
+                    @Override
+                    public void executeOk() {
+                        ToastUtil.show(MainActivity.this,"测试");
+                    }
+                });
+
             }
         });
         lv_hellow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 tv_hello3.setText(presenter.getListValue().get(position));
-            }
-        });
-//        BaseLangDialog dialog=new BaseLangDialog(MainActivity.this, "测试", new BaseLangDialogInterface() {
-//            @Override
-//            public void executeOk() {
-//                ToastUtil.show(MainActivity.this,"测试");
-//            }
-//        });
-        BaseLangSelectPicDialog selectPicDialog=new BaseLangSelectPicDialog(MainActivity.this, new BaseLangSelectPicInterface() {
-            @Override
-            public void executeBtn1() {
-
-            }
-
-            @Override
-            public void executeBtn2() {
-
             }
         });
     }
@@ -130,9 +118,9 @@ public class MainActivity extends BaseLangActivity<MainPresenter> implements Bla
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void notifyView(String tag) {
         MainViewModel model=(MainViewModel)presenter.model;
-        if((int)arg==1){
+        if("1".equals(tag)){
             ywtDiscount.setText(model.getMessage());
             tv_hello2.setText(model.getTv_hello2());
             adapter=new BaseLangAdapter<String>(this, R.layout.listview_main_item, model.getLv_hellow()) {
@@ -143,7 +131,7 @@ public class MainActivity extends BaseLangActivity<MainPresenter> implements Bla
                 }
             };
             lv_hellow.setAdapter(adapter);
-        }else if((int)arg==2){
+        }else if("2".equals(tag)){
             if(adapter!=null){
                 adapter.notifyDataSetChanged();
             }

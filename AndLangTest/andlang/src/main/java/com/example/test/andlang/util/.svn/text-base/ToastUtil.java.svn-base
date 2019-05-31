@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.Gravity;
 import android.widget.Toast;
 
 public class ToastUtil {
@@ -58,23 +59,29 @@ public class ToastUtil {
 		handler.sendMessage(msg);
 	}
 	private static void show(String info){
-		if(mToast==null)
-			mToast= Toast.makeText(mContext, info, Toast.LENGTH_SHORT);
+		if(mToast==null) {
+			mToast = Toast.makeText(mContext, info, Toast.LENGTH_SHORT);
+			mToast.setGravity(Gravity.CENTER, 0, 0);
+		}
 		mToast.setText(info);
 		mToast.show();
 
 	}
 
 	private static void show(String info, int duration){
-		if(mToast==null)
-			mToast= Toast.makeText(mContext, info,duration);
+		if(mToast==null) {
+			mToast = Toast.makeText(mContext, info, duration);
+			mToast.setGravity(Gravity.CENTER, 0, 0);
+		}
 		mToast.setText(info);
 		mToast.show();
 
 	}
 	private static void show(int info){
-		if(mToast==null)
-			mToast= Toast.makeText(mContext, info, Toast.LENGTH_SHORT);
+		if(mToast==null) {
+			mToast = Toast.makeText(mContext, info, Toast.LENGTH_SHORT);
+			mToast.setGravity(Gravity.CENTER, 0, 0);
+		}
 		mToast.setText(info);
 		mToast.show();
 	}
@@ -99,6 +106,11 @@ public class ToastUtil {
 			handler.sendEmptyMessage(3);
 		}
 	}
+
+	public static void resetToast() {
+		mToast = null;
+	}
+
 //	public static void show(Context context, String message) {
 //
 //		mHandler.removeCallbacks(r);

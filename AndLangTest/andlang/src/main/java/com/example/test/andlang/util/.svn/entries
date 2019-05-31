@@ -1,14 +1,14 @@
 10
 
 dir
-35550
+36919
 svn://langlinsen@192.168.11.245/branches/BBC/SuDian_And/Develop/andlang/src/main/java/com/example/test/andlang/util
 svn://langlinsen@192.168.11.245
 
 
 
-2018-11-28T09:59:17.130162Z
-35545
+2019-05-20T09:56:56.790739Z
+36833
 langlinsen
 
 
@@ -103,10 +103,10 @@ file
 
 
 
-2018-11-15T03:58:25.000000Z
-625eb1b20dfcb8bd725dccd1e9e1a12c
-2018-11-15T03:55:09.030254Z
-35482
+2019-03-19T11:05:09.000000Z
+bb6fe54830f529af2831e561bc193943
+2019-03-19T11:54:22.395393Z
+36163
 langlinsen
 has-props
 
@@ -129,41 +129,7 @@ has-props
 
 
 
-1310
-
-BaseLangUtil.java
-file
-35616
-
-
-
-2018-12-07T10:43:45.000000Z
-2976e9fd7e8dee4d31406f4afa7327c1
-2018-12-10T03:55:27.969644Z
-35616
-langlinsen
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-4463
+1956
 
 BitmapUtil.java
 file
@@ -171,11 +137,11 @@ file
 
 
 
-2018-11-15T03:58:25.000000Z
-12b35e672c587e16183a59f4f4b562dc
-2018-11-15T03:55:09.030254Z
-35482
-langlinsen
+2019-03-22T07:39:03.000000Z
+b696481a82e3eb82554bea2b6da10e27
+2019-03-22T06:47:46.804001Z
+36232
+linhp
 
 
 
@@ -198,6 +164,40 @@ langlinsen
 
 
 3795
+
+BaseLangUtil.java
+file
+
+
+
+
+2019-04-22T03:59:32.000000Z
+1bb5920ea118f355dbd8d7d8243b28be
+2019-04-22T04:46:23.928711Z
+36562
+langlinsen
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9040
 
 DateUtil.java
 file
@@ -233,6 +233,40 @@ has-props
 
 27707
 
+Constants.java
+file
+
+
+
+
+2019-05-17T10:15:12.000000Z
+58664f44fbbc4da1b53e441f0974e05d
+2019-05-17T10:33:54.727330Z
+36826
+langlinsen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2630
+
 TimeCalculate.java
 file
 
@@ -267,17 +301,51 @@ langlinsen
 
 10068
 
+PicSelUtil.java
+file
+
+
+
+
+2019-03-01T06:02:42.000000Z
+31ab5a71234a2faa9077a002e82e9a98
+2019-03-01T06:21:27.162097Z
+35979
+langlinsen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5415
+
 FileUtil.java
 file
 
 
 
 
-2018-11-28T09:39:22.000000Z
-5aada3ef8fc8fb8c026af108da729a24
-2018-11-28T09:59:17.130162Z
-35545
-langlinsen
+2019-04-25T11:06:16.000000Z
+bd78509590da15b1063e48b39dfbac65
+2019-04-24T12:24:23.155473Z
+36591
+linhp
 
 
 
@@ -299,52 +367,18 @@ langlinsen
 
 
 
-7072
-
-PicSelUtil.java
-file
-35631
-
-
-
-2018-12-11T07:31:13.000000Z
-a09fabccc5f3502d8ab1c8976fc79231
-2018-12-11T09:08:23.196902Z
-35631
-langlinsen
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-3921
+8266
 
 LogUtil.java
 file
-35561
 
 
 
-2018-11-28T05:11:30.000000Z
-de0c17c45562e0820906c18c81b5032e
-2018-11-30T09:50:57.543992Z
-35561
+
+2019-01-15T10:51:32.000000Z
+ae7e4d0de8aa75a3ecbb67a5d18f5162
+2019-01-15T11:33:07.408223Z
+35819
 langlinsen
 
 
@@ -367,7 +401,7 @@ langlinsen
 
 
 
-1525
+1548
 
 ImageUtil.java
 file
@@ -403,16 +437,50 @@ has-props
 
 9582
 
+ShakeSensorUtil.java
+file
+
+
+
+
+2019-05-17T09:15:37.000000Z
+0c8109cde7e82ec8f413e83cb2f1a808
+2019-05-17T10:33:54.727330Z
+36826
+langlinsen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6892
+
 VersionUtil.java
 file
 
 
 
 
-2018-11-15T03:58:25.000000Z
-b3ba54dea2e8850c0b775ed41c35f4a7
-2018-11-15T03:55:09.030254Z
-35482
+2019-04-12T02:29:41.000000Z
+9548b3f0743306ebaa5e14aa6accba54
+2019-04-12T02:35:22.815283Z
+36513
 langlinsen
 has-props
 
@@ -435,7 +503,7 @@ has-props
 
 
 
-1313
+1433
 
 IDCardUtil.java
 file
@@ -473,14 +541,14 @@ has-props
 
 NetUtil.java
 file
-35631
 
 
 
-2018-12-11T05:48:03.000000Z
-29b2c1f38ae114fc9ebb00fd2da987c9
-2018-12-11T09:08:23.196902Z
-35631
+
+2018-12-13T10:38:09.000000Z
+f6913c41aea37b221a63a4e848ebd102
+2018-12-13T10:50:44.442909Z
+35642
 langlinsen
 has-props
 
@@ -503,7 +571,7 @@ has-props
 
 
 
-8626
+9129
 
 StorageUtils.java
 file
@@ -573,16 +641,50 @@ langlinsen
 
 340
 
+PhotoUtil.java
+file
+
+
+
+
+2019-05-20T09:43:02.000000Z
+d1e847b1545c57813ea176fb4d3823b5
+2019-05-20T09:56:56.790739Z
+36833
+langlinsen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+21411
+
 ToastUtil.java
 file
 
 
 
 
-2018-11-15T03:58:25.000000Z
-4b654faa0f35b88557760a1c8c0cd814
-2018-11-15T03:55:09.030254Z
-35482
+2019-04-10T03:56:01.000000Z
+567ceeecd09ad505cb25a8a76a98f14d
+2019-04-10T04:02:10.614877Z
+36495
 langlinsen
 has-props
 
@@ -605,7 +707,7 @@ has-props
 
 
 
-2974
+3226
 
 StatusBarUtils.java
 file
@@ -647,10 +749,10 @@ file
 
 
 
-2018-11-15T03:58:25.000000Z
-b94f51b6f20976c2bbb5d6d227e47a23
-2018-11-15T03:55:09.030254Z
-35482
+2019-05-17T09:17:47.000000Z
+775311ec819d0518eb0c3dbb95ef4233
+2019-05-17T10:33:54.727330Z
+36826
 langlinsen
 has-props
 
@@ -673,7 +775,7 @@ has-props
 
 
 
-6138
+7159
 
 PermissionsCheckerUtil.java
 file

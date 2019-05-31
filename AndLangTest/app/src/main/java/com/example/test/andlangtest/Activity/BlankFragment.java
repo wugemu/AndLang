@@ -125,9 +125,9 @@ public class BlankFragment extends BaseLangFragment<BlackPresenter> {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void notifyView(String arg) {
         BlackViewModel model=(BlackViewModel)presenter.model;
-        if((int)arg==1){
+        if("1".equals(arg)){
             ImageLoadUtils.doLoadImageUrl(iv_fragment,model.getIv_fragment());
         }
     }

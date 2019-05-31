@@ -1,0 +1,40 @@
+package com.example.test.andlang.util;
+
+public class Constants {
+
+    public static final String WEEXBASEHOST="https://image.sudian178.com";//weex服务器地址
+
+    public static final String BASTHOST_RES = "https://www.sudian178.com";// 正式环境地址
+    public static final String H5HOST_RES = "https://m.sudian178.com";// 正式环境H5地址
+    public static final String WEEX_HOST_RES=WEEXBASEHOST+"/sd/static/js/index.js";//weex正式地址
+    public static final String WEEX_SUCAI_HOST_RES=WEEXBASEHOST+"/sd/static/js/index_material.js";//weex正式地址
+
+    public static final String BASTHOST_PRE = "http://prerelease.sudian178.com";//预发服务器
+    public static final String H5HOST_PRE = "http://prerelease.sudian178.com";// 预发环境H5地址
+    public static final String WEEX_HOST_PRE=WEEXBASEHOST+"/sd/static/prerelease/index.js";//weex预发地址
+    public static final String WEEX_SUCAI_HOST_PRE=WEEXBASEHOST+"/sd/static/prerelease/index_material.js";//weex预发地址
+
+    public static final String BASTHOST_TEST="http://123.157.216.154:8000";// 测试环境地址
+    public static final String H5HOST_TEST = "http://123.157.216.154:8000";// 测试环境H5地址
+    public static final String WEEX_HOST_TEST=WEEXBASEHOST+"/sd/static/js-test/index.js";//weex测试地址
+    public static final String WEEX_SUCAI_HOST_TEST=WEEXBASEHOST+"/sd/static/js-test/index_material.js";//weex测试地址
+
+    public static final String BASTHOST_LOC="http://123.157.216.154:9000";// 开发地址地址
+    public static final String H5HOST_LOC = "http://123.157.216.154:9000";// 开发地址H5地址
+    public static final String WEEX_HOST_LOC=WEEXBASEHOST+"/sd/static/js-test/index.js";//weex开发地址
+    public static final String WEEX_SUCAI_HOST_LOC=WEEXBASEHOST+"/sd/static/js-test/index_material.js";//weex开发地址
+
+    public static final String BASTHOST_LOC2="http://192.168.11.231:8083";// 本地地址
+    public static final String H5HOST_LOC2 = "http://192.168.11.231:8083";// 本地地址H5地址
+    public static final String WEEX_HOST_LOC2=WEEXBASEHOST+"/sd/static/js-test/index.js";//weex本地地址
+    public static final String WEEX_SUCAI_HOST_LOC2=WEEXBASEHOST+"/sd/static/js-test/index_material.js";//weex本地地址
+
+
+    public final static String NOW_CLASS="nowclass";
+    public final static String LOCAL_CLASS="localclass";
+
+    public final static String APP_ICON_NORMAL="com.nyso.sudian.ui.SplashActivity";
+    public final static String APP_ICON_ACTIVITY="com.nyso.sudian.ui.SplashActivity_a";
+
+    public final static String TEST_HOST_TAG="TEST_HOST_TAG";
+}

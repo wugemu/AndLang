@@ -20,6 +20,7 @@ import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.test.andlang.R;
 import com.example.test.andlang.util.FileUtil;
+import com.example.test.andlang.util.LogUtil;
 
 import java.io.File;
 
@@ -156,20 +157,20 @@ public class GlideUtil {
                 .into(new GlideDrawableImageViewTarget(imageView) {
                     @Override
                     public void onLoadStarted(Drawable placeholder) {
-                        imageView.setBackgroundColor(context.getResources().getColor(R.color.lang_colorBackGroud));
                         imageView.setScaleType(ImageView.ScaleType.CENTER);
                         imageView.setImageResource(R.mipmap.image_def);
                     }
 
                     @Override
                     public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        imageView.setBackgroundColor(context.getResources().getColor(R.color.lang_colorBackGroud));
                     }
 
                     @Override
                     public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        super.onResourceReady(resource, glideAnimation);
                         // 图片加载完成
                         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                        super.onResourceReady(resource, glideAnimation);
                     }
                 });
 
@@ -179,7 +180,7 @@ public class GlideUtil {
         display(context, url, imageView, R.mipmap.image_def);
     }
 
-    public void display(final Context context, String url, final ImageView imageView, int defaultImgeId) {
+    public void display(final Context context, final String url, final ImageView imageView, int defaultImgeId) {
 
         Glide.with(context).load(url)
 //                .placeholder(defaultImgeId)
@@ -210,7 +211,7 @@ public class GlideUtil {
 
     }
 
-    public void displayGif(final Context context, String url,final ImageView imageView) {
+    public void displayGifFitCenter(final Context context, String url,final ImageView imageView) {
         Glide.with(context)
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
@@ -239,10 +240,168 @@ public class GlideUtil {
                 });
     }
 
+    public void displayFitCenter(final Context context, final String url, final ImageView imageView) {
+
+        Glide.with(context).load(url)
+//                .placeholder(defaultImgeId)
+                .dontAnimate()//不做淡出效果
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)//解决部分机型背景为绿色的问题
+                .into(new GlideDrawableImageViewTarget(imageView) {
+                    @Override
+                    public void onLoadStarted(Drawable placeholder) {
+                        imageView.setBackgroundColor(context.getResources().getColor(R.color.lang_colorWhite));
+                    }
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        imageView.setBackgroundColor(context.getResources().getColor(R.color.lang_colorBackGroud));
+                        imageView.setScaleType(ImageView.ScaleType.CENTER);
+                        imageView.setImageResource(R.mipmap.image_def);
+                    }
+
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        // 图片加载完成
+                        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                        imageView.setBackgroundColor(Color.TRANSPARENT);
+                        super.onResourceReady(resource, glideAnimation);
+
+                    }
+                });
+
+    }
+
+    public void displayGif(final Context context, String url,final ImageView imageView) {
+        Glide.with(context)
+                .load(url)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(new GlideDrawableImageViewTarget(imageView,GlideDrawable.LOOP_FOREVER) {
+
+                    @Override
+                    public void onLoadStarted(Drawable placeholder) {
+                        // 开始加载图片
+                        imageView.setBackgroundColor(context.getResources().getColor(R.color.lang_colorWhite));
+                    }
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        imageView.setBackgroundColor(context.getResources().getColor(R.color.lang_colorBackGroud));
+                        imageView.setScaleType(ImageView.ScaleType.CENTER);
+                        imageView.setImageResource(R.mipmap.image_def);
+                    }
+
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        super.onResourceReady(resource, glideAnimation);
+                        imageView.setBackgroundColor(Color.TRANSPARENT);
+                        // 图片加载完成
+                    }
+                });
+    }
+
+    public void displayGifCenterCrop(final Context context, String url,final ImageView imageView) {
+        Glide.with(context)
+                .load(url)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(new GlideDrawableImageViewTarget(imageView,GlideDrawable.LOOP_FOREVER) {
+
+                    @Override
+                    public void onLoadStarted(Drawable placeholder) {
+                        // 开始加载图片
+                        imageView.setBackgroundColor(context.getResources().getColor(R.color.lang_colorWhite));
+                    }
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        imageView.setBackgroundColor(context.getResources().getColor(R.color.lang_colorBackGroud));
+                        imageView.setScaleType(ImageView.ScaleType.CENTER);
+                        imageView.setImageResource(R.mipmap.image_def);
+                    }
+
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        super.onResourceReady(resource, glideAnimation);
+                        imageView.setBackgroundColor(Color.TRANSPARENT);
+                        // 图片加载完成
+                    }
+                });
+    }
+
+    public void displayCenterCrop(final Context context, final String url, final ImageView imageView) {
+
+        Glide.with(context).load(url)
+//                .placeholder(defaultImgeId)
+                .dontAnimate()//不做淡出效果
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)//解决部分机型背景为绿色的问题
+                .into(new GlideDrawableImageViewTarget(imageView) {
+                    @Override
+                    public void onLoadStarted(Drawable placeholder) {
+                        imageView.setBackgroundColor(context.getResources().getColor(R.color.lang_colorWhite));
+                    }
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        imageView.setBackgroundColor(context.getResources().getColor(R.color.lang_colorBackGroud));
+                        imageView.setScaleType(ImageView.ScaleType.CENTER);
+                        imageView.setImageResource(R.mipmap.image_def);
+                    }
+
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        // 图片加载完成
+                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        imageView.setBackgroundColor(Color.TRANSPARENT);
+                        super.onResourceReady(resource, glideAnimation);
+
+                    }
+                });
+
+    }
+
+    public void displayRoundImg(final Context context, String url,final ImageView imageView,final float round) {
+        Glide.with(context).load(url)
+                .asBitmap()
+                .dontAnimate()//不做淡出效果
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)//解决部分机型背景为绿色的问题
+                .into(new BitmapImageViewTarget(imageView) {
+                    @Override
+                    public void onLoadStarted(Drawable placeholder) {
+                        view.setBackgroundColor(context.getResources().getColor(R.color.lang_colorWhite));
+                    }
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        view.setBackgroundColor(context.getResources().getColor(R.color.lang_colorBackGroud));
+                        view.setScaleType(ImageView.ScaleType.CENTER);
+                        view.setImageResource(R.mipmap.image_def);
+                    }
+
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        super.setResource(resource);
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                        circularBitmapDrawable.setCornerRadius(round); //设置圆角弧度
+                        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        view.setBackgroundColor(Color.TRANSPARENT);
+                        view.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
+    }
+
     public void displayLocGif(Context context, int imgId, ImageView imageView) {
         Glide.with(context)
                 .load(imgId)
                 .asGif()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(imageView);
+    }
+
+    public void displayLocRes(Context context, int imgId, ImageView imageView) {
+        Glide.with(context)
+                .load(imgId)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(imageView);
     }

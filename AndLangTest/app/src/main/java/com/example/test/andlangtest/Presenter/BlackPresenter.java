@@ -25,7 +25,7 @@ public class BlackPresenter extends BaseLangPresenter {
         if (model != null) {
             model=(BlackViewModel)model;
             ((BlackViewModel) model).setIv_fragment("http://img.zcool.cn/community/01b0d857b1a34d0000012e7e87f5eb.gif");
-            model.notifyData(1);
+            notifyView("1");
         }
     }
 }

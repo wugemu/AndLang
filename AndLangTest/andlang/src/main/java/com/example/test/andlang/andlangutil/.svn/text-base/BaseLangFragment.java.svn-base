@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 
 import com.example.test.andlang.R;
 import com.example.test.andlang.util.LogUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Observer;
 
@@ -113,7 +114,7 @@ public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Frag
             rlLoading.setVisibility(View.VISIBLE);
         }
     }
-//
+
     /**
      * 关闭网络加载动画
      */
@@ -122,6 +123,20 @@ public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Frag
             ivLoading.clearAnimation();
             rlLoading.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String localClassName = getClass().getSimpleName();
+        MobclickAgent.onPageStart(localClassName); //手动统计页面("SplashScreen"为页面名称，可自定义)
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        String localClassName = getClass().getSimpleName();
+        MobclickAgent.onPageEnd(localClassName);
     }
 
     public abstract int getLayoutId();

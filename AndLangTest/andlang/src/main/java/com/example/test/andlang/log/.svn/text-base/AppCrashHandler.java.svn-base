@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.example.test.andlang.R;
 import com.example.test.andlang.andlangutil.BaseLangApplication;
+import com.example.test.andlang.util.BaseLangUtil;
+import com.example.test.andlang.util.LogUtil;
+import com.example.test.andlang.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
@@ -166,8 +169,15 @@ public class AppCrashHandler implements UncaughtExceptionHandler {
             String value = entry.getValue();
             sb.append(key + "=" + value + "\n");
         }
-        //友盟错误统计上传
-        MobclickAgent.reportError(mContext, ex);
+
+        if(!LogUtil.isLog) {
+            //不开启日志时  日志不存本地
+            //友盟错误上传
+//            if(ex!=null) {
+//                MobclickAgent.reportError(mContext, ex);
+//            }
+            return "";
+        }
         Writer writer = new StringWriter();
         PrintWriter printWriter = new PrintWriter(writer);
         ex.printStackTrace(printWriter);
@@ -204,7 +214,76 @@ public class AppCrashHandler implements UncaughtExceptionHandler {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            Toast.makeText(mContext, R.string.tip_log_exit, Toast.LENGTH_LONG).show();
+            ToastUtil.show(mContext,R.string.tip_log_exit);
         }
     };
+
+    public void saveReqInfo2File(Throwable ex,String msg){
+        try {
+            StringBuffer sb = new StringBuffer();
+            if(!BaseLangUtil.isEmpty(msg)){
+                sb.append(msg+"\n");
+            }
+            if(!LogUtil.isLog) {//不开启日志时  日志不存本地
+                return;
+            }
+            if(ex!=null) {
+                Writer writer = new StringWriter();
+                PrintWriter printWriter = new PrintWriter(writer);
+                ex.printStackTrace(printWriter);
+                Throwable cause = ex.getCause();
+                while (cause != null) {
+                    cause.printStackTrace(printWriter);
+                    cause = cause.getCause();
+                }
+                printWriter.close();
+                String result = writer.toString();
+                sb.append(result);
+            }
+
+            AppLog.e(sb.toString());
+
+            long timestamp = System.currentTimeMillis();
+            String time = formatter.format(new Date());
+            String fileName = "crash-" + time + "-" + timestamp + ".log";
+            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                String path = BaseLangApplication.logDir;
+                File dir = new File(path);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                FileOutputStream fos = new FileOutputStream(path + fileName);
+                fos.write(sb.toString().getBytes());
+                fos.close();
+            }
+        } catch (Exception e) {
+            AppLog.e("an error occured while writing file:" + e);
+        }
+    }
+
+    public void saveLogInfo2File(String msg){
+        try {
+            if(!LogUtil.isLog) {//不开启日志时  日志不存本地
+                return;
+            }
+
+            if(BaseLangUtil.isEmpty(msg)){
+                return;
+            }
+
+            //日志打印
+            LogUtil.d(msg);
+
+            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                String path = BaseLangApplication.logDir;
+                File dir = new File(path);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                AppLog.writeLogtoFile("d", "0.0", msg);
+            }
+        } catch (Exception e) {
+            AppLog.e("an error occured while writing file:" + e);
+        }
+    }
 }

@@ -1,14 +1,14 @@
 10
 
 dir
-35550
+36919
 svn://langlinsen@192.168.11.245/branches/BBC/SuDian_And/Develop/andlang/src/main/java/com/example/test/andlang/widget
 svn://langlinsen@192.168.11.245
 
 
 
-2018-11-15T03:55:09.030254Z
-35482
+2019-04-28T08:08:57.635617Z
+36627
 langlinsen
 
 
@@ -62,6 +62,40 @@ langlinsen
 
 
 911
+
+PopTipWindow.java
+file
+
+
+
+
+2019-04-28T08:03:48.000000Z
+535364ca2394021b73d6965a03d03dbb
+2019-04-28T08:08:57.635617Z
+36627
+langlinsen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2119
 
 common
 dir

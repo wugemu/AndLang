@@ -1,14 +1,14 @@
 10
 
 dir
-35550
+36919
 svn://langlinsen@192.168.11.245/branches/BBC/SuDian_And/Develop/andlang/src/main/res/drawable
 svn://langlinsen@192.168.11.245
 
 
 
-2018-11-15T03:55:09.030254Z
-35482
+2019-05-05T09:11:06.418606Z
+36668
 langlinsen
 
 
@@ -25,6 +25,40 @@ langlinsen
 
 
 fa693710-7701-a84d-9436-1f24b81d51d3
+
+safe_mode_drawable.xml
+file
+
+
+
+
+2019-04-24T11:46:14.000000Z
+ed87fc09230fc3df0b156869ac9195bc
+2019-05-05T09:11:06.418606Z
+36668
+langlinsen
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+194
 
 button_bg1.xml
 file
@@ -230,6 +264,74 @@ langlinsen
 
 195
 
+theme_stroke_selector.xml
+file
+
+
+
+
+2019-05-05T07:56:32.000000Z
+4eadc5b5c5716cab6631c6daab07be03
+2019-05-05T09:11:06.418606Z
+36668
+langlinsen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+646
+
+list_divider_horizontal.xml
+file
+
+
+
+
+2019-05-05T07:58:45.000000Z
+b2d1e65417ae6e6c7d5c70ccc0d36a70
+2019-05-05T09:11:06.418606Z
+36668
+langlinsen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+231
+
 bg_rect_reload.xml
 file
 
@@ -263,4 +365,38 @@ langlinsen
 
 
 270
+
+dialog_left_right_btn_black_bg.xml
+file
+
+
+
+
+2019-03-06T08:20:31.000000Z
+63a798776d0567d0d3630d103437d107
+2019-03-06T07:14:14.922519Z
+36028
+linhp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+257
 

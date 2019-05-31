@@ -16,7 +16,7 @@ import java.util.Stack;
  */
 
 public class ActivityUtil {
-
+    public static boolean openAnim=false;
     /**
      * 构造方法私有化
      */
@@ -117,39 +117,51 @@ public class ActivityUtil {
     }
 
     public void start(Activity activity, Intent i) {
-        activity.startActivity(i);
-        activity.overridePendingTransition(R.anim.in_from_right,
-                R.anim.out_to_left);
+        if(openAnim) {
+            start(activity, i, R.anim.in_from_right, R.anim.out_to_left);
+        }else {
+            activity.startActivity(i);
+        }
     }
 
-    public  void start2(Activity activity, Intent i) {
+    public void start(Activity activity, Intent i,int startAnim,int endAnim) {
         activity.startActivity(i);
-        activity.overridePendingTransition(R.anim.alpha_in,
-                R.anim.alpha_out);
+        activity.overridePendingTransition(startAnim,
+                endAnim);
     }
 
     public void startResult(Activity activity, Intent i, int requestCode) {
         activity.startActivityForResult(i, requestCode);
-        activity.overridePendingTransition(R.anim.in_from_right,
-                R.anim.out_to_left);
+        if(openAnim) {
+            activity.overridePendingTransition(R.anim.in_from_right,
+                    R.anim.out_to_left);
+        }
     }
 
     public void exit(Activity activity) {
+        exit(activity,R.anim.push_right_in,R.anim.push_right_out);
+    }
+    public void exit(Activity activity,int startAnim,int endAnim) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(activity.INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(),
                     0);
         }
         activity.finish();
-        activity.overridePendingTransition(R.anim.push_right_in,
-                R.anim.push_right_out);
+        if(openAnim) {
+            activity.overridePendingTransition(startAnim,
+                    endAnim);
+        }
     }
+
 
     public void exitResult(Activity activity, Intent i, int resultCode) {
         activity.setResult(resultCode, i);
         activity.finish();
-        activity.overridePendingTransition(R.anim.push_right_in,
-                R.anim.push_right_out);
+        if(openAnim) {
+            activity.overridePendingTransition(R.anim.push_right_in,
+                    R.anim.push_right_out);
+        }
     }
 
     // 退出before所有activity
@@ -198,5 +210,26 @@ public class ActivityUtil {
         }
     }
 
+    //杀死所有的这种类型acitivty
+    public void exitTypeActivityFromTop(Class activityClass){
+        if (activityStack != null) {
+            while (activityStack.size() > 0) {
+                Activity activity=getLastActivity();
+                if (activity.getClass()==activityClass) {
+                    activityStack.remove(activity);
+                    activity.finish();
+                }else {
+                    break;
+                }
+            }
+        }
+    }
 
+    public boolean isFirstActivity(){
+        if (activityStack != null && activityStack.size()>1) {
+            return false;
+        }else {
+            return true;
+        }
+    }
 }

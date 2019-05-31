@@ -3,6 +3,7 @@ package com.example.test.andlang.andlangutil;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.hardware.SensorEvent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,10 +22,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.test.andlang.R;
+import com.example.test.andlang.test.LangTestActivity;
 import com.example.test.andlang.util.ActivityUtil;
 import com.example.test.andlang.util.BaseLangUtil;
 import com.example.test.andlang.util.LogUtil;
 import com.example.test.andlang.util.NetUtil;
+import com.example.test.andlang.util.ShakeSensorUtil;
 import com.example.test.andlang.util.StatusBarUtils;
 import com.example.test.andlang.util.ToastUtil;
 //import com.squareup.leakcanary.RefWatcher;
@@ -44,6 +47,8 @@ public abstract class BaseLangActivity<T extends BaseLangPresenter> extends AppC
     public T presenter;
     public RelativeLayout rlLoading;
     private ImageView ivLoading;
+
+    private ShakeSensorUtil mShakeSensor;//摇一摇
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +65,38 @@ public abstract class BaseLangActivity<T extends BaseLangPresenter> extends AppC
             }
         }
         initView();
+        initLoading();
         initPresenter();
         setObserModelForTag();
         initData();
         initModel();
+
+
+        //测试配置
+        if(BaseLangUtil.isApkInDebug()){
+            //debug 摇一摇
+            if(ActivityUtil.getInstance().isFirstActivity()) {
+                //只创建和注册一次
+                if (mShakeSensor == null) {
+                    mShakeSensor = new ShakeSensorUtil(BaseLangActivity.this, 2200);
+                    mShakeSensor.setShakeListener(new ShakeSensorUtil.OnShakeListener() {
+
+                        @Override
+                        public void onShakeComplete(SensorEvent event) {
+                            if (!ActivityUtil.getInstance().isTopActivity(LangTestActivity.class)) {
+                                //防止重复跳转
+                                Intent intent = new Intent(BaseLangActivity.this, LangTestActivity.class);
+                                ActivityUtil.getInstance().start(BaseLangActivity.this, intent);
+                            }
+                        }
+                    });
+                }
+                if (mShakeSensor != null) {
+                    LogUtil.d("0.0","注册摇一摇");
+                    mShakeSensor.register();
+                }
+            }
+        }
     }
 
     private void initModel(){
@@ -107,13 +140,14 @@ public abstract class BaseLangActivity<T extends BaseLangPresenter> extends AppC
             }
         }
     }
-    public void initTitleBar(boolean isCanBack,String title,boolean noChangeStatus){
+    public void initTitleBar(boolean isCanBack,boolean haveClose,String title,boolean noChangeStatus){
         if(!noChangeStatus) {
             setStatusBar(1, R.color.colorLangTitle);
         }
         LinearLayout llBack = ButterKnife.findById(this,R.id.lang_ll_back);
         ImageView lang_iv_back=ButterKnife.findById(this,R.id.lang_iv_back);
         TextView tvTitle = ButterKnife.findById(this,R.id.lang_tv_title);
+        TextView lang_tv_close=ButterKnife.findById(this,R.id.lang_tv_close);
         if(tvTitle!=null&& title!=null){
             tvTitle.setText(title);
             tvTitle.setTextColor(Color.argb( 255, 41, 41, 41));
@@ -128,6 +162,19 @@ public abstract class BaseLangActivity<T extends BaseLangPresenter> extends AppC
                     @Override
                     public void onClick(View v) {
                         goBack();
+                    }
+                });
+            }
+        }
+        if(lang_tv_close!=null){
+            if(!haveClose){
+                lang_tv_close.setVisibility(View.GONE);
+            }else {
+                lang_tv_close.setVisibility(View.VISIBLE);
+                lang_tv_close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closeH5();
                     }
                 });
             }
@@ -200,12 +247,16 @@ public abstract class BaseLangActivity<T extends BaseLangPresenter> extends AppC
     @Override
     protected void onResume() {
         super.onResume();
+        String localClassName = getClass().getSimpleName();
+        MobclickAgent.onPageStart(localClassName); //手动统计页面("SplashScreen"为页面名称，可自定义)
         MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        String localClassName = getClass().getSimpleName();
+        MobclickAgent.onPageEnd(localClassName); //手动统计页面("SplashScreen"为页面名称，可自定义)，必须保证 onPageEnd 在 onPause 之前调用，因为SDK会在 onPause 中保存onPageEnd统计到的页面数据。
         MobclickAgent.onPause(this);
     }
 
@@ -228,6 +279,19 @@ public abstract class BaseLangActivity<T extends BaseLangPresenter> extends AppC
         fixInputMethodManagerLeak(this);//修复键盘内存溢出
         fixHuaWeiMemoryLeak();//修复华为手机内存泄露
         ActivityUtil.getInstance().removeActivity(this);
+        //消除id/toast_layout_root} has already been added to the window manager
+        ToastUtil.resetToast();
+
+        //测试配置
+        if(BaseLangUtil.isApkInDebug()) {
+            //取消摇一摇监听
+            if(ActivityUtil.getInstance().isFirstActivity()){
+                if (mShakeSensor != null) {
+                    mShakeSensor.unregister();
+                    LogUtil.d("0.0","取消注册摇一摇");
+                }
+            }
+        }
     }
 
     //网络请求异常显示默认布局
@@ -377,6 +441,10 @@ public abstract class BaseLangActivity<T extends BaseLangPresenter> extends AppC
         } catch (Throwable t) {
 
         }
+
+    }
+
+    public void closeH5(){
 
     }
 

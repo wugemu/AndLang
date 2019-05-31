@@ -1,9 +1,16 @@
 package com.example.test.andlang.util;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AppOpsManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -13,6 +20,9 @@ import android.webkit.CookieSyncManager;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.example.test.andlang.andlangutil.BaseLangApplication;
+
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -47,6 +57,12 @@ public class BaseLangUtil {
         return dm.widthPixels;
     }
 
+    public static int getDisplayHeight(Activity activity) {
+        DisplayMetrics dm = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        return dm.heightPixels;
+    }
+
     //检验手机号码是否有效
     public static boolean isMobile(String str){
         if (str == null || "".equals(str)) {
@@ -56,6 +72,9 @@ public class BaseLangUtil {
             return false;
         }
         if (!str.startsWith("1")) {
+            return false;
+        }
+        if(!isNumericStr(str)){
             return false;
         }
         return true;
@@ -133,14 +152,102 @@ public class BaseLangUtil {
             String paramUrl=url.substring(url.indexOf("?")+1);
             if (paramUrl != null && paramUrl.indexOf("=") > -1) {
                 String[] arrTemp = paramUrl.split("&");
+                if(arrTemp==null){
+                    return "";
+                }
                 for (String str : arrTemp) {
                     String[] qs = str.split("=");
-                    if(key.equals(qs[0])){
+                    if(qs!=null&&qs.length>=2&&key.equals(qs[0])){
                         return qs[1];
                     }
                 }
             }
         }
         return "";
+    }
+
+    //触发修改icon
+    public static void changeLauncher(Activity context) {
+        String nowName=BaseLangApplication.getInstance().getSpUtil().getString(context,Constants.NOW_CLASS);
+        String changeName= BaseLangApplication.getInstance().getSpUtil().getString(context,Constants.LOCAL_CLASS);
+        if(isEmpty(changeName)){
+            return;
+        }
+        if(!changeName.equals(nowName)) {
+            PackageManager pm = context.getPackageManager();
+            //隐藏之前显示的桌面组件
+            pm.setComponentEnabledSetting(new ComponentName(context, nowName),
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+            //显示新的桌面组件
+            pm.setComponentEnabledSetting(new ComponentName(context, changeName),
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+            BaseLangApplication.getInstance().getSpUtil().putString(context,Constants.LOCAL_CLASS,changeName);
+        }
+    }
+
+    //设置icon修改标示
+    //测试 修改桌面icon 活动icon
+    //BaseLangUtil.setChangeLauncherName(HomeActivity.this, com.example.test.andlang.util.Constants.APP_ICON_ACTIVITY);
+    //测试 修改桌面icon 恢复icon
+    //BaseLangUtil.setChangeLauncherName(HomeActivity.this, com.example.test.andlang.util.Constants.APP_ICON_NORMAL);
+    public static void setChangeLauncherName(Activity context,String changeName){
+        if(!isEmpty(changeName)){
+            BaseLangApplication.getInstance().getSpUtil().putString(context,Constants.LOCAL_CLASS,changeName);
+        }
+    }
+    public static void setNowLauncherName(Activity context,String nowName){
+        if(!isEmpty(nowName)){
+            BaseLangApplication.getInstance().getSpUtil().putString(context,Constants.NOW_CLASS,nowName);
+        }
+    }
+
+    /**
+     * 判断当前应用是否是debug状态
+     */
+    public static boolean isApkInDebug() {
+        try {
+            ApplicationInfo info = BaseLangApplication.getInstance().getApplicationInfo();
+            return (info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * 实现文本复制功能
+     * add by wangqianzhou
+     *
+     * @param content
+     */
+    public static void copy(String content, Context context) {
+        // 得到剪贴板管理器
+        ClipboardManager cmb = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData myClip = ClipData.newPlainText("text", content);//text是内容
+        cmb.setPrimaryClip(myClip);
+    }
+
+    public static void installApk(Activity activity,File apkFile) {
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { // 7.0+以上版本
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setDataAndType(FileUtil.file2Uri(activity, apkFile), "application/vnd.android.package-archive");
+        } else {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setDataAndType(FileUtil.file2Uri(activity, apkFile), "application/vnd.android.package-archive");
+        }
+        activity.startActivity(intent);
+    }
+
+    //检测是否由本地文件读写权限
+    public static boolean isHaveSDPer(){
+        if(BaseLangApplication.getInstance()!=null) {
+            PackageManager pkgManager = BaseLangApplication.getInstance().getPackageManager();
+            boolean sdCardWritePermission =
+                    pkgManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, BaseLangApplication.getInstance().getPackageName()) == PackageManager.PERMISSION_GRANTED;
+            return sdCardWritePermission;
+        }else {
+            return false;
+        }
     }
 }

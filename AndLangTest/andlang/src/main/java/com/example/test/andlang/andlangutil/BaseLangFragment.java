@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 
 import com.example.test.andlang.R;
 import com.example.test.andlang.util.LogUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Observer;
 
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Fragment implements Observer{
+public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Fragment{
     public RelativeLayout rlLoading;
     private ImageView ivLoading;
     public BaseLangActivity activity;
@@ -56,7 +57,6 @@ public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Frag
         initView();
         initLoading();
         initPresenter();
-        setObserModelForTag();
         initData();
         initModel();
         return rootview;
@@ -70,13 +70,6 @@ public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Frag
         }
     }
 
-    private void setObserModelForTag(){
-        if(presenter!=null&&presenter.model!=null){
-            presenter.model.addObserver(this);
-        }else {
-            LogUtil.e(BaseLangPresenter.TAG,"presenter 未初始化");
-        }
-    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -86,9 +79,6 @@ public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Frag
     @Override
     public void onDetach() {
         super.onDetach();
-        if(presenter!=null&&presenter.model!=null){
-            presenter.model.deleteObserver(this);
-        }
     }
 
     public void initLoading(){
@@ -113,7 +103,7 @@ public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Frag
             rlLoading.setVisibility(View.VISIBLE);
         }
     }
-//
+
     /**
      * 关闭网络加载动画
      */
@@ -124,8 +114,23 @@ public abstract class BaseLangFragment<T extends BaseLangPresenter> extends Frag
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        String localClassName = getClass().getSimpleName();
+        MobclickAgent.onPageStart(localClassName); //手动统计页面("SplashScreen"为页面名称，可自定义)
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        String localClassName = getClass().getSimpleName();
+        MobclickAgent.onPageEnd(localClassName);
+    }
+
     public abstract int getLayoutId();
     public abstract void initView();
     public abstract void initPresenter();
     public abstract void initData();
+    public abstract void notifyView(String tag);
 }

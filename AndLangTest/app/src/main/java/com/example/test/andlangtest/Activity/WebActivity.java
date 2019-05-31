@@ -37,7 +37,7 @@ public class WebActivity extends BaseLangWebActivity {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void notifyView(String arg) {
 
     }
 }

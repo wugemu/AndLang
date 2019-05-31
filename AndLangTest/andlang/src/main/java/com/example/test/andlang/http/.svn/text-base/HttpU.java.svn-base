@@ -1,16 +1,24 @@
 package com.example.test.andlang.http;
 
 import android.app.Activity;
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 
 import com.example.test.andlang.andlangutil.BaseLangApplication;
 import com.example.test.andlang.andlangutil.BaseLangPresenter;
 import com.example.test.andlang.andlangutil.LangImageUpInterface;
+import com.example.test.andlang.log.AppCrashHandler;
 import com.example.test.andlang.util.ActivityUtil;
 import com.example.test.andlang.util.BaseLangUtil;
 import com.example.test.andlang.util.LogUtil;
@@ -49,6 +57,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
@@ -66,6 +75,7 @@ public class HttpU {
     private static final int TIME_OUT = 30 * 1000; // 超时时间
     private static final String CHARSET = "utf-8"; // 设置编码
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/*");
+
     private HttpU() {
         mOkHttpClient = newOkHttpClient();
         handler = new Handler(Looper.getMainLooper());
@@ -94,24 +104,29 @@ public class HttpU {
                     .addNetworkInterceptor(logInterceptor)//添加网络请求日志
                     .dns(new HttpDns())
                     .build();
+        }else if(openLog) {
+            return new OkHttpClient.Builder().dispatcher(new Dispatcher(ExecutorServiceUtil.getInstence().getExecutorService())).readTimeout(10, TimeUnit.SECONDS)// 设置读取超时时间
+                    .writeTimeout(10, TimeUnit.SECONDS)// 设置写的超时时间
+                    .connectTimeout(20, TimeUnit.SECONDS)// 设置连接超时时间
+                    .addNetworkInterceptor(logInterceptor)//添加网络请求日志
+                    .build();
+        }else if(BaseLangUtil.isHaveSDPer()){
+            //开启本地存储权限后使用缓存机制
+            //新建一个cache，指定目录为外部目录下的okhttp_cache目录，大小为100M
+            Cache cache = new Cache(PicSelUtil.getCacheDir(), 100 * 1024 * 1024);
+            return new OkHttpClient.Builder().dispatcher(new Dispatcher(ExecutorServiceUtil.getInstence().getExecutorService())).readTimeout(10, TimeUnit.SECONDS)// 设置读取超时时间
+                    .writeTimeout(10, TimeUnit.SECONDS)// 设置写的超时时间
+                    .connectTimeout(20, TimeUnit.SECONDS)// 设置连接超时时间
+                    .cache(cache)//缓存设置
+                    .addInterceptor(new RequestCacheI())//请求网络拦截
+//                        .addNetworkInterceptor(new ResponseCacheI())//请求返回网络拦截
+                    .build();
         }else {
-            if(openLog) {
-                return new OkHttpClient.Builder().dispatcher(new Dispatcher(ExecutorServiceUtil.getInstence().getExecutorService())).readTimeout(10, TimeUnit.SECONDS)// 设置读取超时时间
-                        .writeTimeout(10, TimeUnit.SECONDS)// 设置写的超时时间
-                        .connectTimeout(20, TimeUnit.SECONDS)// 设置连接超时时间
-                        .addNetworkInterceptor(logInterceptor)//添加网络请求日志
-                        .build();
-            }else {
-                //新建一个cache，指定目录为外部目录下的okhttp_cache目录，大小为100M
-                Cache cache = new Cache(PicSelUtil.getCacheDir(), 100 * 1024 * 1024);
-                return new OkHttpClient.Builder().dispatcher(new Dispatcher(ExecutorServiceUtil.getInstence().getExecutorService())).readTimeout(10, TimeUnit.SECONDS)// 设置读取超时时间
-                        .writeTimeout(10, TimeUnit.SECONDS)// 设置写的超时时间
-                        .connectTimeout(20, TimeUnit.SECONDS)// 设置连接超时时间
-                        .cache(cache)//缓存设置
-                        .addInterceptor(new RequestCacheI())//请求网络拦截
-//                      .addNetworkInterceptor(new ResponseCacheI(context))//请求返回网络拦截
-                        .build();
-            }
+            //新建一个cache，指定目录为外部目录下的okhttp_cache目录，大小为100M
+            return new OkHttpClient.Builder().dispatcher(new Dispatcher(ExecutorServiceUtil.getInstence().getExecutorService())).readTimeout(10, TimeUnit.SECONDS)// 设置读取超时时间
+                    .writeTimeout(10, TimeUnit.SECONDS)// 设置写的超时时间
+                    .connectTimeout(20, TimeUnit.SECONDS)// 设置连接超时时间
+                    .build();
         }
     }
 
@@ -162,9 +177,14 @@ public class HttpU {
         }
         final Request request = requestBuilder.url(url).post(formBody).tag(url).build();
 
-        LogUtil.d("post请求报文Host：" + url);
-        LogUtil.d("post请求报文cookie：" + cookie);
-        LogUtil.d("post请求报文body：" + params);
+        if(BaseLangUtil.isApkInDebug()) {
+            AppCrashHandler crashHandler = AppCrashHandler.getInstance();
+            if (crashHandler != null) {
+                crashHandler.saveLogInfo2File("post请求报文Host：" + url);
+                crashHandler.saveLogInfo2File("post请求报文cookie：" + cookie);
+                crashHandler.saveLogInfo2File("post请求报文body：" + params);
+            }
+        }
 
         callback.onBefore(request);
 
@@ -235,9 +255,15 @@ public class HttpU {
         if (cookie != null) {
             requestBuilder.header(COOKIE, cookie);
         }
-        LogUtil.d("get请求报文Host：" + reqUrl);
-        LogUtil.d("get请求报文cookie：" + cookie);
-        LogUtil.d("get请求报文body：" + params);
+
+        if(BaseLangUtil.isApkInDebug()) {
+            AppCrashHandler crashHandler = AppCrashHandler.getInstance();
+            if (crashHandler != null) {
+                crashHandler.saveLogInfo2File("get请求报文Host：" + reqUrl);
+                crashHandler.saveLogInfo2File("get请求报文cookie：" + cookie);
+                crashHandler.saveLogInfo2File("get请求报文body：" + params);
+            }
+        }
 
         final Request request = requestBuilder.url(reqUrl).build();
         callback.onBefore(request);
@@ -575,6 +601,91 @@ public class HttpU {
         });
     }
 
+    public Bitmap downImage(String url){
+        //获取okHttp对象get请求
+        try {
+            //获取请求对象
+            Request request = new Request.Builder().url(url).build();
+            //获取响应体
+            ResponseBody body = mOkHttpClient.newCall(request).execute().body();
+            //获取流
+            InputStream in = body.byteStream();
+            //转化为bitmap
+            Bitmap bitmap = BitmapFactory.decodeStream(in);
+
+            return bitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void downVideo(Context mContext,String url){
+        //获取okHttp对象get请求
+        try {
+            String filename=url.substring(url.lastIndexOf("/")+1);
+
+            //创建下载任务
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+            request.setAllowedOverRoaming(true);//漫游网络是否可以下载
+
+            //设置文件类型，可以在下载结束后自动打开该文件
+            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+            String mimeString = mimeTypeMap.getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(url));
+            request.setMimeType(mimeString);
+
+            //在通知栏中显示，默认就是显示的
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+            request.setVisibleInDownloadsUi(true);
+
+            //sdcard的目录下的download文件夹，必须设置
+            request.setDestinationInExternalPublicDir("/"+BaseLangApplication.tmpImageDir+"/", filename);
+
+            //将下载请求加入下载队列
+            DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
+            //加入下载队列后会给该任务返回一个long型的id，
+            //通过该id可以取消任务，重启任务等等，看上面源码中框起来的方法
+            downloadManager.enqueue(request);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public long downAPK(Context mContext,String url,String filename){
+        //获取okHttp对象get请求
+        try {
+            //创建下载任务
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+            request.setAllowedOverRoaming(true);//漫游网络是否可以下载
+
+            //设置文件类型，可以在下载结束后自动打开该文件
+            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+            String mimeString = mimeTypeMap.getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(url));
+            request.setMimeType(mimeString);
+
+            //在通知栏中显示，默认就是显示的
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+            request.setVisibleInDownloadsUi(true);
+
+            //sdcard的目录下的download文件夹，必须设置
+            request.setDestinationInExternalPublicDir("/"+BaseLangApplication.tmpImageDir+"/", filename);
+
+            //将下载请求加入下载队列
+            DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
+            //加入下载队列后会给该任务返回一个long型的id，
+            //通过该id可以取消任务，重启任务等等，看上面源码中框起来的方法
+            if (downloadManager != null) {
+                long downloadId=downloadManager.enqueue(request);
+                return downloadId;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public void downloadFile(final String url,final File saveFile,final HttpCallback callback){
 
         Request request = new Request.Builder().url(url).build();
@@ -646,12 +757,18 @@ public class HttpU {
                     int end = str.indexOf(";");
                     cookie = Des3.encode(str.substring(start, end));
                     BaseLangApplication.getInstance().getSpUtil().putString(context, COOKIE, cookie);
-
                 }
             }
-            LogUtil.d("返回报文Host：" + url);
-            LogUtil.d("返回报文cookie：" + cookie);
-            LogUtil.d("返回报文body：" + result);
+
+
+            if(BaseLangUtil.isApkInDebug()) {
+                AppCrashHandler crashHandler = AppCrashHandler.getInstance();
+                if (crashHandler != null) {
+                    crashHandler.saveLogInfo2File("返回报文Host：" + url);
+                    crashHandler.saveLogInfo2File("返回报文cookie：" + cookie);
+                    crashHandler.saveLogInfo2File("返回报文body：" + result);
+                }
+            }
 
             try {
                 JSONObject jsonObject = new JSONObject(result);
@@ -659,13 +776,18 @@ public class HttpU {
 
 
                 //测试
-//                if(url.equals("https://sdtest.sudian178.com/sdapp/userWithDraw/getUserWithDrawableAmount")){
+//                if(url.equals("http://123.157.216.154:8000/sdapp/goods/queryDetail")){
 //                    //服务器异常
 //                    handler.post(new Runnable() {
 //                        @Override
 //                        public void run() {
-//                            callback.onError(request, null,code);
-//                            callback.onAfter();
+//                            handler.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    callback.errorCode(200002);
+//                                    callback.onAfter();
+//                                }
+//                            });
 //                        }
 //                    });
 //                    return;
@@ -686,7 +808,7 @@ public class HttpU {
                             BaseLangApplication.NOW_TIME = jsonObject.getLong("nowTime");
                         }
                         final String msg = jsonObject.getString("message");
-                        if (!BaseLangUtil.isEmpty(msg)) {
+                        if (!BaseLangUtil.isEmpty(msg)&&context!=null) {
                             //有message toast
                             handler.post(new Runnable() {
                                 @Override
@@ -707,6 +829,15 @@ public class HttpU {
                             callback.onAfter();
                         }
                     });
+                }else if(code==20001||code==200002){
+                    //数据不存在
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.errorCode(code);
+                            callback.onAfter();
+                        }
+                    });
                 }else{
                     //不是401 200
                     final String msg = jsonObject.getString("message");
@@ -715,7 +846,9 @@ public class HttpU {
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                ToastUtil.show(context, msg);
+                                if(context!=null) {
+                                    ToastUtil.show(context, msg);
+                                }
                                 callback.onAfter();
                             }
                         });

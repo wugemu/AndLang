@@ -8,7 +8,9 @@ public class ButtonUtil {
     private static long lastClickTime1;
     private static long lastClickTime2;
     public static long lastClickTime3;
+    private static long lastClickTime4;
     public static long btnId=-1;
+    private static int clickNum=0;
     public static boolean isFastDoubleClick(long btn) {
         long time = System.currentTimeMillis();
         long timeD = time - lastClickTime1;
@@ -18,7 +20,7 @@ public class ButtonUtil {
             lastClickTime1 = time;
             return false;
         }
-        if ( 0 < timeD && timeD <5000) {
+        if ( 0 < timeD && timeD <2500) {
             return true;
         }
         lastClickTime1 = time;
@@ -40,6 +42,27 @@ public class ButtonUtil {
             return true;
         }
         lastClickTime3 = time;
+        return false;
+    }
+
+    public static boolean isFastTenClick(){
+        long time = System.currentTimeMillis();
+        if(clickNum==0){
+            lastClickTime4=time;
+        }
+        long timeD = time - lastClickTime4;
+        if(0<=timeD && timeD<10000){
+            clickNum++;
+            LogUtil.d("0.0",clickNum+"");
+            if(clickNum==10){
+                clickNum=0;
+                return true;
+            }else {
+                return false;
+            }
+        }
+        clickNum=0;
+        lastClickTime4 = time;
         return false;
     }
 }

@@ -3,27 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-   android:paddingTop="20dp"
+    android:paddingTop="20dp"
     android:paddingBottom="20dp"
     android:gravity="center"
     android:id="@+id/lang_bottom"
     android:visibility="visible"
-    android:background="@color/lang_colorBackGroud"
+    android:background="#EFEFEF"
     >
-    <View
-        android:layout_width="80dp"
-        android:layout_height="0.5dp"
-        android:background="#ADADAD"/>
-    <TextView
+    <ImageView
+        android:id="@+id/iv_bottom_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="我是有底线哒～"
+        android:src="@mipmap/pulldown"/>
+    <TextView
+        android:id="@+id/tv_bottom_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="继续上拉看下一场秒杀"
         android:textSize="13sp"
-        android:textColor="#ADADAD"
+        android:textColor="#888888"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"/>
-    <View
-        android:layout_width="80dp"
-        android:layout_height="0.5dp"
-        android:background="#ADADAD"/>
 </LinearLayout>

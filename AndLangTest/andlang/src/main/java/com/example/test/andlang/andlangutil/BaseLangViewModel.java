@@ -20,11 +20,6 @@ import java.util.Observable;
  * Created by root on 18-3-7.
  */
 
-public  class BaseLangViewModel extends Observable{
+public  class BaseLangViewModel{
 
-
-    public void notifyData(Object tag){
-        setChanged();    //改变通知者的状态
-        notifyObservers(tag);
-    }
 }
